@@ -9,7 +9,7 @@ public class Hello_world
 {
     public static void main(String[] args)
     {
-        System.out.println("Edit from home computer is a success."); 
+        System.out.println("Can I pull this?"); 
 //Display the string
     }
 }
