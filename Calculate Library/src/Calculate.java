@@ -38,9 +38,27 @@ public class Calculate {
 		return value;
 	}
 	//Convert a mixed number to an improper fraction
-	public static int toImproperFraction(int wholeNumber, int numerator, int denominator) {
+	public static String toImproperFrac(int wholeNumber, int numerator, int denominator) {
 		int newNumerator = wholeNumber * denominator + numerator;
-		return newNumerator;
+		String newFraction = newNumerator + "/" + denominator;
+		return newFraction;
 	}
- 
+	//Convert an improper fraction to a mixed number
+	public static String toMixedNum(int numerator, int denominator) {
+		int wholeNum = numerator / denominator;
+		int newNumerator = numerator % denominator;
+		return wholeNum + "_" + newNumerator + "/" + denominator;
+	}
+	//FOIL out a binomial to create a quadratic equation
+	public static String foil(int operand1, int operand2, int operand3, int operand4) {
+		int coefficient1 = operand1 * operand3;
+		int coefficient2 = operand1 * operand4 + operand2 * operand3;
+		int constant = operand2 * operand4;
+		return coefficient1 + "n^2 + " + coefficient2 + "n + " + constant;
+	}
+	//Determine whether the first number is evenly divisible by the second
+	public static boolean isDivisibleBy(int dividend, int divisor) {
+		return dividend % divisor == 0;
+	}
+	
 }
