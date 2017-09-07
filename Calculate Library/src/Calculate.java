@@ -60,5 +60,45 @@ public class Calculate {
 	public static boolean isDivisibleBy(int dividend, int divisor) {
 		return dividend % divisor == 0;
 	}
-	
+	//Return the absolute value of a number
+	public static double absValue(double operand) {
+		if(operand<0) {
+			operand = operand * -1;
+		}
+		return operand;
+	}
+	//Return the larger of two numbers
+	public static double max(double operand1, double operand2) {
+		if(operand1 >= operand2) {
+			return operand1;
+		}else {
+			return operand2;
+		}
+	}
+	//Return the largest of three numbers
+	public static double max(double operand1, double operand2, double operand3) {
+		double largerNum;
+		if(operand1 >= operand2) {
+			largerNum = operand1;
+		}else {
+			largerNum = operand2;
+		}
+		if(operand3 > largerNum) {
+			return operand3;
+		}else {
+			return largerNum;
+		}
+	}
+	//Return the smaller of two integers
+	public static double min(double operand1, double operand2) {
+		if(operand1 <= operand2) {
+			return operand1;
+		}else {
+			return operand2;
+		}
+	}
+	//Round a number to two decimal places
+	public static double round2(double operand) {
+		if
+	}
 }
