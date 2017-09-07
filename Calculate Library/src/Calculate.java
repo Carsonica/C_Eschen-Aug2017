@@ -1,4 +1,4 @@
-/* Carson Eschen
+  /* Carson Eschen
  * September 6, 2017
  * Self-written math library. Contains a series of methods to do basic math
  * functions.
@@ -38,5 +38,9 @@ public class Calculate {
 		return value;
 	}
 	//Convert a mixed number to an improper fraction
-	
+	public static int toImproperFraction(int wholeNumber, int numerator, int denominator) {
+		int newNumerator = wholeNumber * denominator + numerator;
+		return newNumerator;
+	}
+ 
 }
