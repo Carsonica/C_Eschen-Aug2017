@@ -99,6 +99,8 @@ public class Calculate {
 	}
 	//Round a number to two decimal places
 	public static double round2(double operand) {
-		if
+		if((operand * 1000) % 10 < 5) {
+			return(operand - (operand % 0.01));
+		}
 	}
 }
