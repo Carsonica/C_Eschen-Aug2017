@@ -101,6 +101,8 @@ public class Calculate {
 	public static double round2(double operand) {
 		if((operand * 1000) % 10 < 5) {
 			return(operand - (operand % 0.01));
+		}else {
+			return(0.01 + operand - (operand % 0.01));
 		}
 	}
 }
