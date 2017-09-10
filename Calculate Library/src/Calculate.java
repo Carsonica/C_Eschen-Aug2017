@@ -99,10 +99,12 @@ public class Calculate {
 	}
 	//Round a number to two decimal places
 	public static double round2(double operand) {
-		if((operand * 1000) % 10 < 5) {
-			return(operand - (operand % 0.01));
-		}else {
+		if(operand % 0.01 > 0.004999999) {
+			System.out.println("Did the first");
 			return(0.01 + operand - (operand % 0.01));
+		}else {
+			System.out.println("Did the second");
+			return(operand - (operand % 0.01));
 		}
 	}
 }
