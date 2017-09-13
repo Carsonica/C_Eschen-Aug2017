@@ -99,12 +99,66 @@ public class Calculate {
 	}
 	//Round a number to two decimal places
 	public static double round2(double operand) {
-		if(operand % 0.01 > 0.0049999999999){
-			System.out.println("Did the first");
+		if(operand % 0.01 > 0.005){
 			return(0.01 + operand - (operand % 0.01));
 		}else {
-			System.out.println("Did the second");
 			return(operand - (operand % 0.01));
 		}
 	}
+	//Raises a value to a positive integer power
+	public static double exponent(double base, int power) {
+		double currentValue = 1;
+		for(int i = 0; i < power; i++) {
+			currentValue = currentValue * base;
+		}
+		return currentValue;
+	}
+	//Returns a factorial of a value
+	public static int factorial(int operand) {
+		int currentValue = 1;
+		while(operand > 0) {
+			currentValue = operand * currentValue;
+			operand--;
+		}
+		return currentValue;
+	}
+	//Determines whether an integer is prime
+	public static boolean isPrime(int operand) {
+		boolean test = true;
+		int i = 2;
+		while(test == true && i < operand) {
+			test = !isDivisibleBy(operand, i);
+			i++;
+		}
+		return test;
+	}
+	//Finds the greatest common factor
+	public static int gcf(int operand1, int operand2) {
+		int i = operand1;
+		while(isDivisibleBy(operand1, i) == false || isDivisibleBy(operand2, i) == false) {
+			i--;
+		}
+		return i;
+	}
+	//Finds an approximation of the square root
+	public static double sqrt(double operand) {
+		double i;
+		for(i = 0; (i * i) < operand; i++) {}
+		while(i * i > operand) {
+			i -= 0.1;
+		}
+		while(i * i < operand) {
+			i += 0.01;
+		}
+		while(i * i > operand) {
+			i -= 0.001;
+		}
+		i = round2(i);
+		return i;
+	}
 }
+
+
+
+
+
