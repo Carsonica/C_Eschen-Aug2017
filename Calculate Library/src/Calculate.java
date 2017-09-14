@@ -58,6 +58,7 @@ public class Calculate {
 	}
 	//Determine whether the first number is evenly divisible by the second
 	public static boolean isDivisibleBy(int dividend, int divisor) {
+		//Throw when divisor = 0
 		return dividend % divisor == 0;
 	}
 	//Return the absolute value of a number
@@ -107,6 +108,7 @@ public class Calculate {
 	}
 	//Raises a value to a positive integer power
 	public static double exponent(double base, int power) {
+		//Throw when power < 1
 		double currentValue = 1;
 		for(int i = 0; i < power; i++) {
 			currentValue = currentValue * base;
@@ -115,6 +117,7 @@ public class Calculate {
 	}
 	//Returns a factorial of a value
 	public static int factorial(int operand) {
+		//Throw when operand < 1
 		int currentValue = 1;
 		while(operand > 0) {
 			currentValue = operand * currentValue;
@@ -142,6 +145,7 @@ public class Calculate {
 	}
 	//Finds an approximation of the square root
 	public static double sqrt(double operand) {
+		//Throw when operand < 0
 		double i;
 		for(i = 0; (i * i) < operand; i++) {}
 		while(i * i > operand) {
