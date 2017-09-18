@@ -176,11 +176,13 @@ public class Calculate {
 		if(discriminant(a,b,c) < 0) {
 			return "No real roots";
 		}else if(discriminant(a,b,c) == 0) {
-			double root =
+			double root = (-b + sqrt(discriminant(a,b,c))) / 2;
 			double roundedRoot = round2(root);
 			return "" + roundedRoot;
 		}else {
-			return
+			double root1 = (-b + sqrt(discriminant(a,b,c))) / 2;
+			double root2 = (-b - sqrt(discriminant(a,b,c))) / 2;
+			return root1 + " and " + root2;
 		}
 	}
 }
