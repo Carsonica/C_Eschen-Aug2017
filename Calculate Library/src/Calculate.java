@@ -58,7 +58,9 @@ public class Calculate {
 	}
 	//Determine whether the first number is evenly divisible by the second
 	public static boolean isDivisibleBy(int dividend, int divisor) {
-		//Throw when divisor = 0
+		if(divisor == 0) {
+			throw new IllegalArgumentException("Cannot divide by 0");
+		}
 		return dividend % divisor == 0;
 	}
 	//Return the absolute value of a number
@@ -100,15 +102,20 @@ public class Calculate {
 	}
 	//Round a number to two decimal places
 	public static double round2(double operand) {
-		if(operand % 0.01 > 0.005){
-			return(0.01 + operand - (operand % 0.01));
-		}else {
-			return(operand - (operand % 0.01));
+		if(operand % 0.01 > 0.00499999999){
+			return (0.01 + operand - (operand % 0.01));
+		}else if(operand % 0.01 < -0.004999999999 && operand < 0) {
+			return (operand - (operand % 0.01) - 0.01);
+		}
+		else {
+			return (operand - (operand % 0.01));
 		}
 	}
 	//Raises a value to a positive integer power
 	public static double exponent(double base, int power) {
-		//Throw when power < 1
+		if(power < 1) {
+			throw new IllegalArgumentException("Cannot raise to an exponent less than 1");
+		}
 		double currentValue = 1;
 		for(int i = 0; i < power; i++) {
 			currentValue = currentValue * base;
@@ -117,7 +124,9 @@ public class Calculate {
 	}
 	//Returns a factorial of a value
 	public static int factorial(int operand) {
-		//Throw when operand < 1
+		if(operand < 0) {
+			throw new IllegalArgumentException("Cannot find the factorial of a negative number");
+		}
 		int currentValue = 1;
 		while(operand > 0) {
 			currentValue = operand * currentValue;
@@ -145,7 +154,9 @@ public class Calculate {
 	}
 	//Finds an approximation of the square root
 	public static double sqrt(double operand) {
-		//Throw when operand < 0
+		if(operand < 0) {
+			throw new IllegalArgumentException("Cannot find the square root of a negative value");
+		}
 		double i;
 		for(i = 0; (i * i) < operand; i++) {}
 		while(i * i > operand) {
@@ -159,6 +170,18 @@ public class Calculate {
 		}
 		i = round2(i);
 		return i;
+	}
+	//Finds approximations of the real roots for quadratic equation with the given coefficients 
+	public static String quadForm(int a, int b, int c) {
+		if(discriminant(a,b,c) < 0) {
+			return "No real roots";
+		}else if(discriminant(a,b,c) == 0) {
+			double root =
+			double roundedRoot = round2(root);
+			return "" + roundedRoot;
+		}else {
+			return
+		}
 	}
 }
 
