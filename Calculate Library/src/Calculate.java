@@ -182,12 +182,13 @@ public class Calculate {
 		}else {
 			double root1 = (-b + sqrt(discriminant(a,b,c))) / 2;
 			double root2 = (-b - sqrt(discriminant(a,b,c))) / 2;
-			return root1 + " and " + root2;
+			double roundedRoot1 = round2(root1);
+			double roundedRoot2 = round2(root1);
+			if(min(roundedRoot1, roundedRoot2) == roundedRoot1) {
+				return root1 + " and " + root2;
+			}else {
+			return root2 + " and " + root1;
+			}
 		}
 	}
 }
-
-
-
-
-
