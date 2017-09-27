@@ -1,3 +1,9 @@
+/* Carson Eschen
+ * September 27, 2017
+ * 2nd period
+ * Quadratic equation describer that calculates the intercepts, direction, and vertex of a quadratic
+ * equation, given the coefficients.
+ */
 
 public class Quadratic {
 	public static String quadrDescriber (double a, double b, double c) {

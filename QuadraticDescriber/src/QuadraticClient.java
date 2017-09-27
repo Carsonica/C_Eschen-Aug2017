@@ -1,8 +1,8 @@
 /* Carson Eschen
  * September 27, 2017
  * 2nd period
- * Quadratic equation describer that accepts input from the user, and finds the intercepts, direction,
- * and vertex.
+ * Quadratic equation describer client that accepts input from the user, and gives the output after calling
+ * the quadrDescriber method.
  */
 
 
