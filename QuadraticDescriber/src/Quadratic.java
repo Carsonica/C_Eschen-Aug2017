@@ -1,38 +1,44 @@
 
 public class Quadratic {
-	public static void quadrDescriber (double a, double b, double c) {
-		//Check if the coefficients actually give a quadratic equation
+	public static String quadrDescriber (double a, double b, double c) {
+		//Check if the coefficients actually give a quadratic equation.
 		if(a == 0) {
-			throw new IllegalArgumentException("The coefficient of x^2 cannot be 0");
+			throw new IllegalArgumentException("The coefficient of x^2 cannot be 0 for a quadratic equation.");
 		}
-		//Check if the graph opens up or down
+		
+		//Check if the graph opens up or down.
+		String direction = "";
 		if(a < 0) {
-			String direction = "opens down.";
+			direction = "The graph opens down.";
 		} else {
-			String direction = "opens up.";
+			direction = "The graph opens up.";
 		}
-		//Find the vertex by completing the square
+		
+		//Find the vertex by using the completeTheSquare method.
+		String vertex = completeTheSquare(a, b, c);
+		
+		//Find the roots using the quadForm method.
 		String interceptsX = quadForm(a, b, c);
-		double interceptY = c;
+		
+		//Find the y-intercept using the constant.
+		String interceptY = "The y-intercept is " + c;
+		
+			return direction + "\n" + vertex + "\n" + interceptsX + "\n" + interceptY;
 	}
 
 	public static String quadForm(double a, double b, double c) {
 		if(discriminant(a,b,c) < 0) {
-			return "No real roots";
+			return "No x-intercepts";
 		}else if(discriminant(a,b,c) == 0) {
 			double root = (-b + sqrt(discriminant(a,b,c))) / 2;
 			double roundedRoot = round2(root);
 			return "" + roundedRoot;
 		}else {
-			double root1 = (-b + sqrt(discriminant(a,b,c))) / 2;
-			double root2 = (-b - sqrt(discriminant(a,b,c))) / 2;
+			double root1 = (-b + sqrt(discriminant(a,b,c))) / (2 * a);
+			double root2 = (-b - sqrt(discriminant(a,b,c))) / (2 * a);
 			double roundedRoot1 = round2(root1);
-			double roundedRoot2 = round2(root1);
-			if(min(roundedRoot1, roundedRoot2) == roundedRoot1) {
-				return root1 + " and " + root2;
-			}else {
-				return root2 + " and " + root1;
-			}
+			double roundedRoot2 = round2(root2);
+			return "The x-intercepts are " + roundedRoot1 + " and " + roundedRoot2;
 		}
 	}
 		
@@ -77,5 +83,11 @@ public class Quadratic {
 		}else {
 			return operand2;
 		}
+	}
+	
+	public static String completeTheSquare(double a, double b, double c) {
+		double xCoordinate = -b / a / 2;
+		double yCoordinate = c - ((xCoordinate * xCoordinate) * a);
+		return "The vertex is at (" + xCoordinate + "," + yCoordinate + ").";
 	}
 }
