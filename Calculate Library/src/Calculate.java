@@ -1,7 +1,7 @@
   /* Carson Eschen
- * September 6, 2017
+ * September 29, 2017
  * 2nd Period
- * Self-written math library. Contains a series of methods to do basic math functions.
+ * Self-written math library. Contains a series of methods to do math functions.
  */
 
 public class Calculate {
@@ -117,7 +117,10 @@ public class Calculate {
 	
 	//Round a number to two decimal places
 	public static double round2(double operand) {
+		//Change the hundredths place to the ones place
 		operand = operand * 100;
+		//Check if you need to run up or down, do so, then cast to an int to remove the extra digits.
+		//Finally, divide by 100.0 to change the decimal place back to where it should be.
 		if(operand % 1 >= 0.5 && operand > 0) {
 			return ((int) (1 + operand)) / 100.0;
 		}else if(operand % 1 <= -0.5 && operand < 0) {
@@ -175,17 +178,22 @@ public class Calculate {
 	
 	//Finds an approximation of the square root
 	public static double sqrt(double operand) {
+		//Check if the number has a real square root
 		if(operand < 0) {
 			throw new IllegalArgumentException("Cannot find the square root of a negative value");
 		}
 		double i;
+		//Find the approximate value of the number, including just the digits to the left of the decimal
 		for(i = 0; (i * i) < operand; i++) {}
+		//Subtract 0.1 until the value is just less than the square root of the input
 		while(i * i > operand) {
 			i -= 0.1;
 		}
+		//Add 0.01 until the value is just greater than the square root of the input
 		while(i * i < operand) {
 			i += 0.01;
 		}
+		//Subtract 0.001 until the value is just smaller than the square root of the input
 		while(i * i > operand) {
 			i -= 0.001;
 		}
@@ -195,6 +203,7 @@ public class Calculate {
 	
 	//Finds approximations of the real roots for quadratic equation with the given coefficients 
 	public static String quadForm(int a, int b, int c) {
+		//Check whether the discriminant is positive, negative, or 0
 		if(discriminant(a,b,c) < 0) {
 			return "No real roots";
 		}else if(discriminant(a,b,c) == 0) {
@@ -202,6 +211,7 @@ public class Calculate {
 			double roundedRoot = round2(root);
 			return "" + roundedRoot;
 		}else {
+			//Use the quadratic formula to find the zeroes, then round
 			double root1 = (-b + sqrt(discriminant(a,b,c))) / 2;
 			double root2 = (-b - sqrt(discriminant(a,b,c))) / 2;
 			double roundedRoot1 = round2(root1);
