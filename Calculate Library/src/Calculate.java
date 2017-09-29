@@ -117,13 +117,14 @@ public class Calculate {
 	
 	//Round a number to two decimal places
 	public static double round2(double operand) {
-		if(operand % 0.01 > 0.00499999999){
-			return (0.01 + operand - (operand % 0.01));
-		}else if(operand % 0.01 < -0.004999999999 && operand < 0) {
-			return (operand - (operand % 0.01) - 0.01);
+		operand = operand * 100;
+		if(operand % 1 >= 0.5 && operand > 0) {
+			return ((int) (1 + operand)) / 100.0;
+		}else if(operand % 1 <= -0.5 && operand < 0) {
+			return ((int) (operand - 1)) / 100.0;
 		}
 		else {
-			return (operand - (operand % 0.01));
+			return ((int) (operand)) / 100.0;
 		}
 	}
 	
