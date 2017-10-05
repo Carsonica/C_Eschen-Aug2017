@@ -19,23 +19,29 @@ public class Collab {
 		boolean firstTime = true;
 		//Create a boolean to ensure the even maximum will be set equal to at least one valid input.
 		boolean firstEven = true;
+		//Create a boolean that will allow the user to decide when the program should stop
 		boolean doneYet = false;
 		do {
 			System.out.print("Enter the next number: ");
 			double number = input.nextDouble();
+			//Check if the number is smaller than the previous smallest, or the first number entered
 			if(number < min || firstTime) {
 				min = number;
 			}
+			//Check if the number is larger than the previous largest, or the first number entered
 			if(number > max || firstTime) {
 				max = number;
 			}
+			//Check if the number is even
 			if(number % 2 == 0) {
+				//Add to the running total of evens.
 				sumEven += number;
 				if(number > evenMax || firstEven) {
 					evenMax = number;
 				}
 				firstEven = false;
 			}
+			//Determine whether the user is done entering numbers.
 			System.out.print("Would you like to input another number? Type yes or no: ");
 			String repeat = input.next();
 			if(repeat.equals("no")) {
