@@ -22,10 +22,13 @@ public class QuadraticClient {
 			double b = userInput.nextDouble();
 			System.out.print("Please enter the constant: ");
 			double c = userInput.nextDouble();
+			System.out.println("Description of the graph of: ");
+			System.out.println("y = " + a + "x^2 + " + b + "x + " + c);
+			System.out.println();
 			System.out.println(Quadratic.quadrDescriber(a, b, c));
-			System.out.print("Would you like to enter another equation? Enter y or n: ");
+			System.out.print("Would you like to enter another equation? Enter yes or no: ");
 			repeat = userInput.next();
-		} while(repeat.equals("y"));
+		} while(repeat.equals("yes"));
 	}
 
 }

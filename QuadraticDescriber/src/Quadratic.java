@@ -20,6 +20,7 @@ public class Quadratic {
 			direction = "The graph opens up.";
 		}
 		
+		String axisOfSym = "The axis of symmetry is x = " + (-b / a / 2);
 		//Find the vertex by using the completeTheSquare method.
 		String vertex = completeTheSquare(a, b, c);
 		
@@ -27,9 +28,9 @@ public class Quadratic {
 		String interceptsX = quadForm(a, b, c);
 		
 		//Find the y-intercept using the constant.
-		String interceptY = "The y-intercept is " + c;
+		String interceptY = "The y-intercept is (0.0, " + c + ").";
 		
-			return direction + "\n" + vertex + "\n" + interceptsX + "\n" + interceptY;
+		return direction + "\n" + axisOfSym + "\n" + vertex + "\n" + interceptsX + "\n" + interceptY;
 	}
 
 	public static String quadForm(double a, double b, double c) {
@@ -38,13 +39,13 @@ public class Quadratic {
 		}else if(discriminant(a,b,c) == 0) {
 			double root = (-b + sqrt(discriminant(a,b,c))) / 2;
 			double roundedRoot = round2(root);
-			return "" + roundedRoot;
+			return "The only x-intercept is (" + roundedRoot + ", 0.0).";
 		}else {
 			double root1 = (-b + sqrt(discriminant(a,b,c))) / (2 * a);
 			double root2 = (-b - sqrt(discriminant(a,b,c))) / (2 * a);
 			double roundedRoot1 = round2(root1);
 			double roundedRoot2 = round2(root2);
-			return "The x-intercepts are " + roundedRoot1 + " and " + roundedRoot2;
+			return "The x-intercepts are (" + roundedRoot1 + ", 0.0) and (" + roundedRoot2 + ", 0.0).";
 		}
 	}
 		
