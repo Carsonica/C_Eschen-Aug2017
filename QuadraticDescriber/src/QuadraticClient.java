@@ -13,9 +13,9 @@ public class QuadraticClient {
 	public static void main(String[] args) {
 		String repeat = "";
 		Scanner userInput = new Scanner(System.in);
+		System.out.println("Hello! Enter the coefficients of a quadratic equation in standard form as the ");
+		System.out.println("prompts direct to find the direction, the vertex, and the intercepts.");
 		do {
-			System.out.println("Hello! Enter the coefficients of a quadratic equation in standard form as the ");
-			System.out.println("prompts direct to find the direction, the vertex, and the intercepts.");
 			System.out.print("Please enter the coefficient of the x^2 term: ");
 			double a = userInput.nextDouble();
 			System.out.print("Please enter the coefficient of the x term: ");

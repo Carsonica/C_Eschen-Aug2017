@@ -19,8 +19,9 @@ public class Quadratic {
 		} else {
 			direction = "The graph opens up.";
 		}
+		//Find the axis of symmetry
+		String axisOfSym = "The axis of symmetry is x = " + round2((-b / a / 2));
 		
-		String axisOfSym = "The axis of symmetry is x = " + (-b / a / 2);
 		//Find the vertex by using the completeTheSquare method.
 		String vertex = completeTheSquare(a, b, c);
 		
@@ -55,13 +56,17 @@ public class Quadratic {
 	}
 	
 	public static double round2(double operand) {
-		if(operand % 0.01 > 0.00499999999){
-			return (0.01 + operand - (operand % 0.01));
-		}else if(operand % 0.01 < -0.004999999999 && operand < 0) {
-			return (operand - (operand % 0.01) - 0.01);
+		//Change the hundredths place to the ones place
+		operand = operand * 100;
+		//Check if you need to run up or down, do so, then cast to an int to remove the extra digits.
+		//Finally, divide by 100.0 to change the decimal place back to where it should be.
+		if(operand % 1 >= 0.5 && operand > 0) {
+			return ((int) (1 + operand)) / 100.0;
+		}else if(operand % 1 <= -0.5 && operand < 0) {
+			return ((int) (operand - 1)) / 100.0;
 		}
 		else {
-			return (operand - (operand % 0.01));
+			return ((int) (operand)) / 100.0;
 		}
 	}
 	
@@ -93,8 +98,8 @@ public class Quadratic {
 	}
 	
 	public static String completeTheSquare(double a, double b, double c) {
-		double xCoordinate = -b / a / 2;
-		double yCoordinate = c - ((xCoordinate * xCoordinate) * a);
+		double xCoordinate = round2(-b / a / 2);
+		double yCoordinate = round2(c - ((xCoordinate * xCoordinate) * a));
 		return "The vertex is at (" + xCoordinate + "," + yCoordinate + ").";
 	}
 }
