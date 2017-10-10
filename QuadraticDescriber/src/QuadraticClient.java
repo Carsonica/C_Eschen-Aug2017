@@ -18,6 +18,9 @@ public class QuadraticClient {
 		do {
 			System.out.print("Please enter the coefficient of the x^2 term: ");
 			double a = userInput.nextDouble();
+			if(a == 0) {
+				throw new IllegalArgumentException("The coefficient of x^2 cannot be 0 for a quadratic equation.");
+			}
 			System.out.print("Please enter the coefficient of the x term: ");
 			double b = userInput.nextDouble();
 			System.out.print("Please enter the constant: ");

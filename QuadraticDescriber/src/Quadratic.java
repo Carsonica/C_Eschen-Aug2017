@@ -7,11 +7,6 @@
 
 public class Quadratic {
 	public static String quadrDescriber (double a, double b, double c) {
-		//Check if the coefficients actually give a quadratic equation.
-		if(a == 0) {
-			throw new IllegalArgumentException("The coefficient of x^2 cannot be 0 for a quadratic equation.");
-		}
-		
 		//Check if the graph opens up or down.
 		String direction = "";
 		if(a < 0) {
@@ -33,7 +28,8 @@ public class Quadratic {
 		
 		return direction + "\n" + axisOfSym + "\n" + vertex + "\n" + interceptsX + "\n" + interceptY;
 	}
-
+	
+	//Find the roots
 	public static String quadForm(double a, double b, double c) {
 		if(discriminant(a,b,c) < 0) {
 			return "No x-intercepts";
@@ -49,7 +45,8 @@ public class Quadratic {
 			return "The x-intercepts are (" + roundedRoot1 + ", 0.0) and (" + roundedRoot2 + ", 0.0).";
 		}
 	}
-		
+	
+	//Find the discriminant
 	public static double discriminant(double operandA, double operandB, double operandC) {
 		double value = (operandB * operandB) - (4 * operandA * operandC);
 		return value;
@@ -70,6 +67,7 @@ public class Quadratic {
 		}
 	}
 	
+	//Approximate the square root
 	public static double sqrt(double operand) {
 		if(operand < 0) {
 			throw new IllegalArgumentException("Cannot find the square root of a negative value");
@@ -89,6 +87,7 @@ public class Quadratic {
 		return i;
 	}
 	
+	//Find the smaller of two numbers
 	public static double min(double operand1, double operand2) {
 		if(operand1 <= operand2) {
 			return operand1;
@@ -97,6 +96,7 @@ public class Quadratic {
 		}
 	}
 	
+	//Find the vertex by completing the square
 	public static String completeTheSquare(double a, double b, double c) {
 		double xCoordinate = round2(-b / a / 2);
 		double yCoordinate = round2(c - ((xCoordinate * xCoordinate) * a));
