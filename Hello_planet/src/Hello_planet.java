@@ -2,13 +2,23 @@
 public class Hello_planet {
 
 	public static void main(String[] args) {
-		//Pikachu!
-		
-		System.out.println("Pikachu welcomes you to the world of Pokemon!");
-		System.out.println("   (\\__/)");
-		System.out.println("   (o^.^)");
-		System.out.println("z(_(\")(\")");
-
+		String word = "ABRACADABRA";
+		String newWord = "";
+		int place = 0;
+		while(place < word.length()) {
+			if(place + 1 == word.length()) {
+				newWord += word.charAt(place);
+				place++;
+			} else if(word.charAt(place) == 'A' && word.charAt(place + 1) != 'A') {
+				newWord += word.charAt(place + 1); 
+				newWord += word.charAt(place);
+				place += 2;
+			} else {
+				newWord += word.charAt(place);
+				place++;
+			}
+		}
+		System.out.print(newWord);
 	}
 
 }
