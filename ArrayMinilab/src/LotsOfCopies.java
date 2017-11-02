@@ -2,6 +2,8 @@
  * October 30, 2017
  * Array Mini-lab
  */
+
+import java.util.Arrays;
 public class LotsOfCopies {
 	public static void main(String[] args) {
 		int num = 7;
@@ -12,6 +14,17 @@ public class LotsOfCopies {
 		for(int i = 0; i < arrMain.length; i++) {
 			System.out.print(arrMain[i] + " ");
 		}
+		int a = num;
+		num = 8;
+		System.out.println(a);
+		String newString = strMain;
+		strMain += " is supercool";
+		System.out.println(newString);
+		int[] newArray = arrMain;
+		for(int i = 0; i < arrMain.length; i++) {
+			arrMain[i] *= 2;
+		}
+		System.out.println(Arrays.toString(newArray));
 	}
 	
 	public static void changeMe(int x, String str, int[] arr) {
