@@ -1,3 +1,7 @@
+/* Carson Eschen
+ * November 6, 2017
+ * Magpie Chatbot
+ */
 import java.util.Scanner;
 
 //A simple class to run the Magpie class.
