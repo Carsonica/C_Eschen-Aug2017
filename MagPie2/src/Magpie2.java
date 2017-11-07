@@ -1,3 +1,7 @@
+/* Carson Eschen
+ * November 7, 2017
+ * A chatbot with a few different responses to different keywords.
+ */
 
 public class Magpie2 {
 
