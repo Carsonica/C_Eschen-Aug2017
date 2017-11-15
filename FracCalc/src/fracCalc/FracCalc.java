@@ -4,8 +4,7 @@ import java.lang.String;
 
 public class FracCalc {
 
-    public static void main(String[] args) 
-    {
+    public static void main(String[] args) {
         //Read the input from the user and call produceAnswer with an equation. Print the result.
     	//Repeat until the user types "quit"
     	Scanner console = new Scanner(System.in);
@@ -16,7 +15,7 @@ public class FracCalc {
     		if(input.equals("quit")) {
     			notDoneYet = false;
     		} else {
-    			System.out.print(produceAnswer(input));
+    			System.out.println(produceAnswer(input));
     		}
     	}
     }
@@ -29,9 +28,7 @@ public class FracCalc {
     //        
     // The function should return the result of the fraction after it has been calculated
     //      e.g. return ==> "1_1/4"
-    public static String produceAnswer(String input)
-    { 
-        // TODO: Implement this function to produce the solution to the input
+    public static String produceAnswer(String input) { 
     	//Split the input into 3 parts, with a variable for each
         String[] splitInput = input.trim().split(" ");
         String operand1 = splitInput[0];
@@ -44,23 +41,34 @@ public class FracCalc {
     }
     public static int[] parseInputs(String operand) {
     	//Declare integer variables for the whole number, numerator, and denominator 
-    	//and set them to their default values.
+    	//and set them to their default values. Also, find the index of the slash and underscore.
         int whole = 0;
         int numerator = 0;
         int denominator = 1;
-        if(operand.indexOf("_") >= 0) {
-        	whole = Integer.parseInt(operand.substring(0, operand.indexOf("_")));
-        	if(operand.indexOf("/") >= 0) {
-        		numerator = Integer.parseInt(operand.substring(operand.indexOf("_"), operand.indexOf("/")));
-        		denominator = Integer.parseInt(operand.substring(operand.indexOf("/")), operand.length());
-        	}
-        } else if(operand.indexOf("/") >= 0) {
-        	numerator = Integer.parseInt(operand.substring(0, operand.indexOf("/")));
-    		denominator = Integer.parseInt(operand.substring(operand.indexOf("/")), operand.length());
+        int underscorePlace = operand.indexOf("_");
+        int slashPlace = operand.indexOf("/");
+        //If there is an underscore...
+        if(underscorePlace >= 0) {
+        	//...set the variable for the whole equal to the number before it...
+        	whole = Integer.parseInt(operand.substring(0, underscorePlace));
+        	//...set the numerator equal to the number after the underscore and before the slash
+        	numerator = Integer.parseInt(operand.substring(underscorePlace + 1, slashPlace));
+       		//...and set the denominator equal to the number after the slash
+        		denominator = Integer.parseInt(operand.substring(slashPlace + 1));
+        } //If there is only a slash...
+        else if(slashPlace >= 0) {
+        	//...set the numerator equal to the number before the slash...
+        	numerator = Integer.parseInt(operand.substring(0, slashPlace));
+        	//...and set the denominator equal to the number after the slash.
+    		denominator = Integer.parseInt(operand.substring(slashPlace + 1, operand.length()));
+        } //If there is no slash or underscore...
+        else {
+        	//...set the whole to the number put in.
+        	whole = Integer.parseInt(operand);
         }
+        //Create and return an array of the newly parsed values
         int[] operandArray = {whole, numerator, denominator};
         return operandArray;
     }
-    // TODO: Fill in the space below with any helper methods that you think you will need
     
 }
