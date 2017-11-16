@@ -10,7 +10,8 @@ public class FracCalc {
     	Scanner console = new Scanner(System.in);
     	boolean notDoneYet = true;
     	while(notDoneYet) {
-    		System.out.print("Enter your equation, with mixed fractions in the form \"X_Y/Z\", or enter quit"); 	
+    		System.out.print("Enter your equation, with mixed fractions in the form \"X_Y/Z\", or enter quit"); 
+    		System.out.print("The valid operators are +, -, *, and /.");
     		String input = console.nextLine();
     		if(input.equals("quit")) {
     			notDoneYet = false;
@@ -34,10 +35,32 @@ public class FracCalc {
         String operand1 = splitInput[0];
         String operand2 = splitInput[2];
         String operator = splitInput[1];
-        //Call parseInputs twice to parse each input
+        //Call parseInputs twice to parse each input, putting the int values into an array.
+        //The order is: whole, numerator, denominator
         int[] parsedOperand1 = parseInputs(operand1);
         int[] parsedOperand2 = parseInputs(operand2);
-        return "whole:" + parsedOperand2[0] + " numerator:" + parsedOperand2[1] + " denominator:" + parsedOperand2[2];
+        //Check which operation to do
+        int[] answer = new int[3];
+        if(operator.equals("+")) {
+        	answer = fracAddition(parsedOperand1, parsedOperand2);
+        } else if(operator.equals("-")) {
+        	//Make the second operator negative before calling addition
+        	parsedOperand2[0] *= -1;
+        	parsedOperand2[1] *= -1;
+        	answer = fracAddition(parsedOperand1, parsedOperand2);
+        } else if(operator.equals("*")) {
+        	answer = fracMultiplication(parsedOperand1, parsedOperand2);
+        } else if(operator.equals("/")) {
+        	//Convert the second operator to its reciprocal before calling multiplication
+        	int newDenominator = parsedOperand2[1] * parsedOperand2[0];
+        	parsedOperand2[0] = 0;
+        	parsedOperand2[1] = parsedOperand2[2];
+        	parsedOperand2[2] = newDenominator;
+        	answer = fracMultiplication(parsedOperand1, parsedOperand2);
+        } else {
+        	return "That is not a valid operator.";
+        }
+        return "" + answer[0] + answer[1] + answer[2];
     }
     public static int[] parseInputs(String operand) {
     	//Declare integer variables for the whole number, numerator, and denominator 
@@ -69,6 +92,18 @@ public class FracCalc {
         //Create and return an array of the newly parsed values
         int[] operandArray = {whole, numerator, denominator};
         return operandArray;
+    }
+    public static int[] fracAddition(int[] operand1, int[] operand2) {
+    	//Add the two whole numbers together
+    	int wholeSum = operand1[0] + operand2[0];
+    	int newDenominator = operand1[2] * operand2[2];
+    	int newNumerator = operand1[1] * operand2[2] + operand1[2] * operand2[1];
+    	int[] fracSum = {wholeSum, newNumerator, newDenominator};
+    	return fracSum;
+    }
+    public static int[] fracMultiplication(int[] operand1, int[] operand2) {
+    	
+    	return fracProduct
     }
     
 }
