@@ -10,8 +10,8 @@ public class FracCalc {
     	Scanner console = new Scanner(System.in);
     	boolean notDoneYet = true;
     	while(notDoneYet) {
-    		System.out.print("Enter your equation, with mixed fractions in the form \"X_Y/Z\", or enter quit"); 
-    		System.out.print("The valid operators are +, -, *, and /.");
+    		System.out.println("Enter your equation, with mixed fractions in the form \"X_Y/Z\", or enter quit"); 
+    		System.out.println("The valid operators are +, -, *, and /.");
     		String input = console.nextLine();
     		if(input.equals("quit")) {
     			notDoneYet = false;
@@ -39,8 +39,9 @@ public class FracCalc {
         //The order is: whole, numerator, denominator
         int[] parsedOperand1 = parseInputs(operand1);
         int[] parsedOperand2 = parseInputs(operand2);
-        //Check which operation to do
+        //Create an array to hold the values for the final result
         int[] answer = new int[3];
+        //Check which operation to use
         if(operator.equals("+")) {
         	answer = fracAddition(parsedOperand1, parsedOperand2);
         } else if(operator.equals("-")) {
@@ -52,7 +53,7 @@ public class FracCalc {
         	answer = fracMultiplication(parsedOperand1, parsedOperand2);
         } else if(operator.equals("/")) {
         	//Convert the second operator to its reciprocal before calling multiplication
-        	int newDenominator = parsedOperand2[1] * parsedOperand2[0];
+        	int newDenominator = parsedOperand2[1] + parsedOperand2[2] * parsedOperand2[0];
         	parsedOperand2[0] = 0;
         	parsedOperand2[1] = parsedOperand2[2];
         	parsedOperand2[2] = newDenominator;
@@ -60,8 +61,10 @@ public class FracCalc {
         } else {
         	return "That is not a valid operator.";
         }
-        return "" + answer[0] + answer[1] + answer[2];
+        return answer[0] + "_" + answer[1] + "/" + answer[2];
     }
+    
+    //Parse the input string to turn it into ints
     public static int[] parseInputs(String operand) {
     	//Declare integer variables for the whole number, numerator, and denominator 
     	//and set them to their default values. Also, find the index of the slash and underscore.
@@ -93,6 +96,9 @@ public class FracCalc {
         int[] operandArray = {whole, numerator, denominator};
         return operandArray;
     }
+    
+    //Add the two input arrays, where each one represents a mixed number
+    //Order: whole, numerator, denominator
     public static int[] fracAddition(int[] operand1, int[] operand2) {
     	//Add the two whole numbers together
     	int wholeSum = operand1[0] + operand2[0];
@@ -101,9 +107,14 @@ public class FracCalc {
     	int[] fracSum = {wholeSum, newNumerator, newDenominator};
     	return fracSum;
     }
+    
+    //Multiply the two input arrays, where each one represents a mixed number
+    //Order: whole, numerator, denominator
     public static int[] fracMultiplication(int[] operand1, int[] operand2) {
-    	
-    	return fracProduct
+    	int newNumerator = (operand1[0] * operand1[2] + operand1[1]) * (operand2[0] * operand2[2] + operand2[1]);
+    	int newDenominator = operand1[2] * operand2[2];
+    	int[] fracProduct = {0, newNumerator, newDenominator};
+    	return fracProduct;
     }
     
 }
