@@ -39,6 +39,9 @@ public class FracCalc {
         //The order is: whole, numerator, denominator
         int[] parsedOperand1 = parseInputs(operand1);
         int[] parsedOperand2 = parseInputs(operand2);
+        //Call toImproperFraction twice to convert each fraction to be improper
+        toImproperFraction(parsedOperand1);
+        toImproperFraction(parsedOperand2);
         //Create an array to hold the values for the final result
         int[] answer = new int[3];
         //Check which operation to use
@@ -46,25 +49,24 @@ public class FracCalc {
         	answer = fracAddition(parsedOperand1, parsedOperand2);
         } else if(operator.equals("-")) {
         	//Make the second operator negative before calling addition
-        	parsedOperand2[0] *= -1;
         	parsedOperand2[1] *= -1;
         	answer = fracAddition(parsedOperand1, parsedOperand2);
         } else if(operator.equals("*")) {
         	answer = fracMultiplication(parsedOperand1, parsedOperand2);
         } else if(operator.equals("/")) {
         	//Convert the second operator to its reciprocal before calling multiplication
-        	int newDenominator = parsedOperand2[1] + parsedOperand2[2] * parsedOperand2[0];
-        	parsedOperand2[0] = 0;
+        	int newDenominator = parsedOperand2[1];
         	parsedOperand2[1] = parsedOperand2[2];
         	parsedOperand2[2] = newDenominator;
         	answer = fracMultiplication(parsedOperand1, parsedOperand2);
         } else {
         	return "That is not a valid operator.";
         }
+        reduceAndConvertToMixed(answer);
         return answer[0] + "_" + answer[1] + "/" + answer[2];
     }
     
-    //Parse the input string to turn it into ints
+    //Parse the input string to turn it into an array of ints
     public static int[] parseInputs(String operand) {
     	//Declare integer variables for the whole number, numerator, and denominator 
     	//and set them to their default values. Also, find the index of the slash and underscore.
@@ -97,24 +99,41 @@ public class FracCalc {
         return operandArray;
     }
     
+    //Convert the fractions to be improper
+    public static void toImproperFraction(int[] operand) {
+    	//If it's positive, add the the numerator to the product of the denominator and the whole.
+    	//If it's negative, subtract it instead.
+    	//If the whole is 0, do nothing.
+    	if(operand[0] > 0) {
+    		operand[1] += (operand[0] * operand[2]);
+    	}else if(operand[0] < 0) {
+    		operand[1] = operand[0] * operand[2] - operand[1];
+    	}
+    	//The whole is no longer needed, so change it to 0.
+    	operand[0] = 0;
+    }
+    
     //Add the two input arrays, where each one represents a mixed number
     //Order: whole, numerator, denominator
     public static int[] fracAddition(int[] operand1, int[] operand2) {
-    	//Add the two whole numbers together
-    	int wholeSum = operand1[0] + operand2[0];
     	int newDenominator = operand1[2] * operand2[2];
     	int newNumerator = operand1[1] * operand2[2] + operand1[2] * operand2[1];
-    	int[] fracSum = {wholeSum, newNumerator, newDenominator};
+    	int[] fracSum = {0, newNumerator, newDenominator};
     	return fracSum;
     }
     
     //Multiply the two input arrays, where each one represents a mixed number
     //Order: whole, numerator, denominator
     public static int[] fracMultiplication(int[] operand1, int[] operand2) {
-    	int newNumerator = (operand1[0] * operand1[2] + operand1[1]) * (operand2[0] * operand2[2] + operand2[1]);
+    	int newNumerator = operand1[1] * operand2[1];
     	int newDenominator = operand1[2] * operand2[2];
     	int[] fracProduct = {0, newNumerator, newDenominator};
     	return fracProduct;
     }
     
+    //First, reduce the number to its smallest value
+    //Then, convert it to a mixed number
+    public static void reduceAndConvertToMixed(int[] fraction) {
+    	
+    }
 }
