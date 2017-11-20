@@ -21,14 +21,6 @@ public class FracCalc {
     	}
     }
     
-    // ** IMPORTANT ** DO NOT DELETE THIS FUNCTION.  This function will be used to test your code
-    // This function takes a String 'input' and produces the result
-    //
-    // input is a fraction string that needs to be evaluated.  For your program, this will be the user input.
-    //      e.g. input ==> "1/2 + 3/4"
-    //        
-    // The function should return the result of the fraction after it has been calculated
-    //      e.g. return ==> "1_1/4"
     public static String produceAnswer(String input) { 
     	//Split the input into 3 parts, with a variable for each
         String[] splitInput = input.trim().split(" ");
@@ -63,7 +55,23 @@ public class FracCalc {
         	return "That is not a valid operator.";
         }
         reduceAndConvertToMixed(answer);
-        return answer[0] + "_" + answer[1] + "/" + answer[2];
+        String returnValue = answer[0] + "_" + answer[1] + "/" + answer[2];
+        //Check which values are 0 to return the simplified value
+        if(answer[0] == 0) {
+        	if(answer[1] == 0) {
+        		//If the whole and numerator are 0
+        		return "0";
+        	}else {
+        		//If the whole is 0, but the numerator is not
+        		return answer[1] + "/" + answer[2];
+        	}
+        }else if(answer[1] == 0) {
+        	//If the numerator is 0, but the whole is not
+        	return "" + answer[0];
+        }else {
+        	//If none of the values are 0
+        	return answer[0] + "_" + answer[1] + "/" + answer[2];
+        }
     }
     
     //Parse the input string to turn it into an array of ints
@@ -75,6 +83,7 @@ public class FracCalc {
         int denominator = 1;
         int underscorePlace = operand.indexOf("_");
         int slashPlace = operand.indexOf("/");
+        
         //If there is an underscore...
         if(underscorePlace >= 0) {
         	//...set the variable for the whole equal to the number before it...
@@ -83,17 +92,22 @@ public class FracCalc {
         	numerator = Integer.parseInt(operand.substring(underscorePlace + 1, slashPlace));
        		//...and set the denominator equal to the number after the slash
         		denominator = Integer.parseInt(operand.substring(slashPlace + 1));
-        } //If there is only a slash...
+        } 
+        
+        //If there is only a slash...
         else if(slashPlace >= 0) {
         	//...set the numerator equal to the number before the slash...
         	numerator = Integer.parseInt(operand.substring(0, slashPlace));
         	//...and set the denominator equal to the number after the slash.
     		denominator = Integer.parseInt(operand.substring(slashPlace + 1, operand.length()));
-        } //If there is no slash or underscore...
+        } 
+        
+        //If there is no slash or underscore...
         else {
         	//...set the whole to the number put in.
         	whole = Integer.parseInt(operand);
         }
+        
         //Create and return an array of the newly parsed values
         int[] operandArray = {whole, numerator, denominator};
         return operandArray;
@@ -101,7 +115,7 @@ public class FracCalc {
     
     //Convert the fractions to be improper
     public static void toImproperFraction(int[] operand) {
-    	//If it's positive, add the the numerator to the product of the denominator and the whole.
+    	//If the number is positive, add the the numerator to the product of the denominator and the whole.
     	//If it's negative, subtract it instead.
     	//If the whole is 0, do nothing.
     	if(operand[0] > 0) {
@@ -116,7 +130,9 @@ public class FracCalc {
     //Add the two input arrays, where each one represents a mixed number
     //Order: whole, numerator, denominator
     public static int[] fracAddition(int[] operand1, int[] operand2) {
+    	//Find the common denominator
     	int newDenominator = operand1[2] * operand2[2];
+    	//Find the numerator of the sum
     	int newNumerator = operand1[1] * operand2[2] + operand1[2] * operand2[1];
     	int[] fracSum = {0, newNumerator, newDenominator};
     	return fracSum;
@@ -125,6 +141,7 @@ public class FracCalc {
     //Multiply the two input arrays, where each one represents a mixed number
     //Order: whole, numerator, denominator
     public static int[] fracMultiplication(int[] operand1, int[] operand2) {
+    	//Multiply the top and the bottom individually.
     	int newNumerator = operand1[1] * operand2[1];
     	int newDenominator = operand1[2] * operand2[2];
     	int[] fracProduct = {0, newNumerator, newDenominator};
@@ -134,6 +151,21 @@ public class FracCalc {
     //First, reduce the number to its smallest value
     //Then, convert it to a mixed number
     public static void reduceAndConvertToMixed(int[] fraction) {
-    	
+    	//For each integer equal to or less than the denominator (but greater than 1), check to see if
+    	//both the numerator and denominator are both divisible by it. If so, divide both by the number.
+    	for(int i = fraction[2]; i > 1; i--) {
+    		if(fraction[1] % i == 0 && fraction[2] % i == 0) {
+    			fraction[1] = fraction[1] / i;
+    			fraction[2] = fraction[2] / i;
+    		}
+    	}
+    	//To eliminate any improper fractions, divide the top by the bottom to get the whole.
+    	fraction[0] = fraction[1] / fraction[2];
+    	//Then, find the remainder to make the new numerator.
+    	fraction[1] = fraction[1] % fraction[2];
+    	//Since the positive/negative sign is now represented by the whole, make the numerators and 
+    	//denominators positive.
+    	fraction[1] = Math.abs(fraction[1]);
+    	fraction[2] = Math.abs(fraction[2]);
     }
 }
