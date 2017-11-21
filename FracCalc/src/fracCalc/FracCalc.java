@@ -22,41 +22,52 @@ public class FracCalc {
     }
     
     public static String produceAnswer(String input) { 
-    	//Split the input into 3 parts, with a variable for each
+    	//Split the input into parts
         String[] splitInput = input.trim().split(" ");
-        String operand1 = splitInput[0];
-        String operand2 = splitInput[2];
-        String operator = splitInput[1];
-        //Call parseInputs twice to parse each input, putting the int values into an array.
-        //The order is: whole, numerator, denominator
-        int[] parsedOperand1 = parseInputs(operand1);
-        int[] parsedOperand2 = parseInputs(operand2);
-        //Call toImproperFraction twice to convert each fraction to be improper
-        toImproperFraction(parsedOperand1);
-        toImproperFraction(parsedOperand2);
-        //Create an array to hold the values for the final result
+        //Create an array to hold the answer
         int[] answer = new int[3];
-        //Check which operation to use
-        if(operator.equals("+")) {
-        	answer = fracAddition(parsedOperand1, parsedOperand2);
-        } else if(operator.equals("-")) {
-        	//Make the second operator negative before calling addition
-        	parsedOperand2[1] *= -1;
-        	answer = fracAddition(parsedOperand1, parsedOperand2);
-        } else if(operator.equals("*")) {
-        	answer = fracMultiplication(parsedOperand1, parsedOperand2);
-        } else if(operator.equals("/")) {
-        	//Convert the second operator to its reciprocal before calling multiplication
-        	int newDenominator = parsedOperand2[1];
-        	parsedOperand2[1] = parsedOperand2[2];
-        	parsedOperand2[2] = newDenominator;
-        	answer = fracMultiplication(parsedOperand1, parsedOperand2);
-        } else {
-        	return "That is not a valid operator.";
+        //Check to see if the number of operators and operands is an odd
+        if(splitInput.length % 2 == 0) {
+        	return "ERROR: The number of operators and operands is invalid.";
         }
+        for(int i = 0; i * 2 + 1 < splitInput.length; i+= 2) {
+	        //Call parseInputs twice to parse each input, putting the int values into an array.
+	        //The order is: whole, numerator, denominator
+	        int[] parsedOperand1 = parseInputs(splitInput[0]);
+	        int[] parsedOperand2 = parseInputs(splitInput[2]);
+	        //Call toImproperFraction twice to convert each fraction to be improper
+	        toImproperFraction(parsedOperand1);
+	        toImproperFraction(parsedOperand2);
+	        //Check which operation to use
+	        if(splitInput[1].equals("+")) {
+	        	answer = fracAddition(parsedOperand1, parsedOperand2);
+	        } else if(splitInput[1].equals("-")) {
+	        	//Make the second operator negative before calling addition
+	        	parsedOperand2[1] *= -1;
+	        	answer = fracAddition(parsedOperand1, parsedOperand2);
+	        } else if(splitInput[1].equals("*")) {
+	        	answer = fracMultiplication(parsedOperand1, parsedOperand2);
+	        } else if(splitInput[1].equals("/")) {
+	        	//Convert the second operator to its reciprocal before calling multiplication
+	        	int newDenominator = parsedOperand2[1];
+	        	parsedOperand2[1] = parsedOperand2[2];
+	        	parsedOperand2[2] = newDenominator;
+	        	answer = fracMultiplication(parsedOperand1, parsedOperand2);
+	        } else {
+	        	return "ERROR: Invalid operator or format.";
+	        }
+	        //Put the subtotal in the first place of splitInput, than move the remaining values
+	        //two places to the left
+	        String subtotal = answer[0] + "_" + answer[1] + "/" + answer[2];
+	        splitInput[0] = subtotal;
+	        for(int j = 1; j < splitInput.length - 3; j++) {
+	        	splitInput[j] = splitInput[j + 2];
+	        }
+	        
+        }
+        //Reduce and convert the answer to a mixed number
         reduceAndConvertToMixed(answer);
-        String returnValue = answer[0] + "_" + answer[1] + "/" + answer[2];
-        //Check which values are 0 to return the simplified value
+        //Check which values are 0 to return the simplified value 
         if(answer[0] == 0) {
         	if(answer[1] == 0) {
         		//If the whole and numerator are 0
