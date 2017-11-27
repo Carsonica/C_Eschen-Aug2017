@@ -30,7 +30,9 @@ public class FracCalc {
         if(splitInput.length % 2 == 0) {
         	return "ERROR: The number of operators and operands is invalid.";
         }
-        for(int i = 0; i * 2 + 1 < splitInput.length; i+= 2) {
+        //Create a loop to repeat all the steps a number of times equal to half the number of inputs,
+        //rounded down, in order to account for the number of operators.
+        for(int i = 0; i * 2 + 1 < splitInput.length; i++) {
 	        //Call parseInputs twice to parse each input, putting the int values into an array.
 	        //The order is: whole, numerator, denominator
 	        int[] parsedOperand1 = parseInputs(splitInput[0]);
@@ -60,14 +62,13 @@ public class FracCalc {
 	        //two places to the left
 	        String subtotal = answer[0] + "_" + answer[1] + "/" + answer[2];
 	        splitInput[0] = subtotal;
-	        for(int j = 1; j < splitInput.length - 3; j++) {
+	        for(int j = 1; j < splitInput.length - 2; j++) {
 	        	splitInput[j] = splitInput[j + 2];
-	        }
-	        
+	        }      
         }
-        //Reduce and convert the answer to a mixed number
+        //Reduce and convert the final answer to a mixed number
         reduceAndConvertToMixed(answer);
-        //Check which values are 0 to return the simplified value 
+        //Check which values are 0 to return the simplified value without them.
         if(answer[0] == 0) {
         	if(answer[1] == 0) {
         		//If the whole and numerator are 0
@@ -164,7 +165,7 @@ public class FracCalc {
     public static void reduceAndConvertToMixed(int[] fraction) {
     	//For each integer equal to or less than the denominator (but greater than 1), check to see if
     	//both the numerator and denominator are both divisible by it. If so, divide both by the number.
-    	for(int i = fraction[2]; i > 1; i--) {
+    	for(int i = Math.abs(fraction[2]); i > 1; i--) {
     		if(fraction[1] % i == 0 && fraction[2] % i == 0) {
     			fraction[1] = fraction[1] / i;
     			fraction[2] = fraction[2] / i;
@@ -174,9 +175,16 @@ public class FracCalc {
     	fraction[0] = fraction[1] / fraction[2];
     	//Then, find the remainder to make the new numerator.
     	fraction[1] = fraction[1] % fraction[2];
-    	//Since the positive/negative sign is now represented by the whole, make the numerators and 
+    	//If the positive/negative sign is now represented by the whole, make the numerators and 
     	//denominators positive.
-    	fraction[1] = Math.abs(fraction[1]);
-    	fraction[2] = Math.abs(fraction[2]);
+    	if(fraction[0] != 0) {
+    		fraction[1] = Math.abs(fraction[1]);
+    		fraction[2] = Math.abs(fraction[2]);
+    	} 
+    	//If the denominator is negative, change the numerator's sign.
+    	else if(fraction[2] < 0){
+    		fraction[1] *= -1;
+    		fraction[2] = Math.abs(fraction[2]);
+    	}
     }
 }
