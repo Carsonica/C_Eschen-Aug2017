@@ -1,3 +1,9 @@
+/* Carson Eschen
+ * November 28, 2017
+ * FracCalc: A program to complete an operation on two or more fractions
+ * input as a string by the user.
+ */
+
 package fracCalc;
 import java.util.*;
 import java.lang.String;
@@ -26,7 +32,7 @@ public class FracCalc {
         String[] splitInput = input.trim().split(" ");
         //Create an array to hold the answer
         int[] answer = new int[3];
-        //Check to see if the number of operators and operands is an odd
+        //Check to see if the sum of operators and operands is odd. If not, return an error
         if(splitInput.length % 2 == 0) {
         	return "ERROR: The number of operators and operands is invalid.";
         }
@@ -37,6 +43,10 @@ public class FracCalc {
 	        //The order is: whole, numerator, denominator
 	        int[] parsedOperand1 = parseInputs(splitInput[0]);
 	        int[] parsedOperand2 = parseInputs(splitInput[2]);
+	        //Check if either of the denominators is 0, indicating a non-existant fraction
+	        if(parsedOperand1[2] == 0 || parsedOperand2[2] == 0) {
+	        	return "ERROR: Fractions cannot have a denominator of 0.";
+	        }
 	        //Call toImproperFraction twice to convert each fraction to be improper
 	        toImproperFraction(parsedOperand1);
 	        toImproperFraction(parsedOperand2);
@@ -71,17 +81,17 @@ public class FracCalc {
         //Check which values are 0 to return the simplified value without them.
         if(answer[0] == 0) {
         	if(answer[1] == 0) {
-        		//If the whole and numerator are 0
+        		//If the whole and numerator are 0, return 0.
         		return "0";
         	}else {
-        		//If the whole is 0, but the numerator is not
+        		//If the whole is 0, but the numerator is not, return just the fraction
         		return answer[1] + "/" + answer[2];
         	}
         }else if(answer[1] == 0) {
-        	//If the numerator is 0, but the whole is not
+        	//If the numerator is 0, but the whole is not, return justs the whole
         	return "" + answer[0];
         }else {
-        	//If none of the values are 0
+        	//If none of the values are 0, return all the values
         	return answer[0] + "_" + answer[1] + "/" + answer[2];
         }
     }
@@ -98,7 +108,7 @@ public class FracCalc {
         
         //If there is an underscore...
         if(underscorePlace >= 0) {
-        	//...set the variable for the whole equal to the number before it...
+        	//...set the variable for the whole equal to the number before the underscore...
         	whole = Integer.parseInt(operand.substring(0, underscorePlace));
         	//...set the numerator equal to the number after the underscore and before the slash
         	numerator = Integer.parseInt(operand.substring(underscorePlace + 1, slashPlace));
