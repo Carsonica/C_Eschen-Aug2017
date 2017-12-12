@@ -8,12 +8,14 @@ package fracCalc;
 import java.util.Scanner;
 
 class Fraction {
-	//Create fields for the whole, numerator, denominator, and positive/negative sign.
-	private int sign = 1;
-	private int whole = 0;
+	//Create fields for the numerator and denominator.
 	private int numerator = 0;
 	private int denominator = 1;
+	
+	//Create a constructor that will parse an input string and turn it into an improper fraction.
 	Fraction(String fraction){
+		//Create temporary storage for the whole number, with a default of 0.
+		int whole = 0;
 		//Find the index of the underscore and slash
 		int underscorePlace = fraction.indexOf("_");
         int slashPlace = fraction.indexOf("/");
@@ -41,8 +43,44 @@ class Fraction {
         	whole = Integer.parseInt(fraction);
         
         }
-        sign = whole / Math.abs(whole);
-        whole = Math.abs(whole);
+        //Eliminate the whole number so there is just an improper fraction.
+        numerator += whole * denominator;
+	}
+	
+	//Create a toString method that will put out
+	public String toString(){
+		//Simplify the fraction
+		//For each integer equal to or less than the denominator (but greater than 1), check to see if
+    	//both the numerator and denominator are both divisible by it. If so, divide both by the number.
+    	for(int i = Math.abs(denominator); i > 1; i--) {
+    		if(numerator % i == 0 && denominator % i == 0) {
+    			numerator = numerator / i;
+    			denominator = denominator / i;
+    		}
+    	}
+		//Calculate the whole number
+		int whole = numerator / denominator;
+		//Use the remainder to find the new numerator
+		numerator = numerator % denominator;
+		return "whole: " + whole + "numerator: " + "denominator: ";
+		//Check which values are 0 to return the simplified value without them.
+        /* 
+        if(whole == 0) {
+        	if(numerator == 0) {
+        		//If the whole and numerator are 0, return 0.
+        		return "0";
+        	}else {
+        		//If the whole is 0, but the numerator is not, return just the fraction
+        		return numerator + "/" + denominator;
+        	}
+        }else if(numerator == 0) {
+        	//If the numerator is 0, but the whole is not, return justs the whole
+        	return "" + whole;
+        }else {
+        	//If none of the values are 0, return all the values
+        	return whole + "_" + numerator + "/" + denominator;
+        }
+        */
 	}
 }
 
@@ -77,9 +115,9 @@ public class FracCalc {
     { 
     	//Split the input into parts
         String[] splitInput = input.trim().split(" ");
-      //Check to see if the sum of operators and s is odd. If not, return an error
+      //Check to see if the sum of operators and operands is odd. If not, return an error
         if(splitInput.length % 2 == 0) {
-        	return "ERROR: The number of operators and s is invalid.";
+        	return "ERROR: The number of operators and operands is invalid.";
         }
         return "";
     }
