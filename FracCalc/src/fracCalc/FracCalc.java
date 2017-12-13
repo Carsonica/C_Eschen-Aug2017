@@ -7,83 +7,6 @@ package fracCalc;
 
 import java.util.Scanner;
 
-class Fraction {
-	//Create fields for the numerator and denominator.
-	private int numerator = 0;
-	private int denominator = 1;
-	
-	//Create a constructor that will parse an input string and turn it into an improper fraction.
-	Fraction(String fraction){
-		//Create temporary storage for the whole number, with a default of 0.
-		int whole = 0;
-		//Find the index of the underscore and slash
-		int underscorePlace = fraction.indexOf("_");
-        int slashPlace = fraction.indexOf("/");
-        //If there is an underscore...
-        if(underscorePlace >= 0) {
-        	//...set the variable for the whole equal to the number before the underscore...
-        	whole = Integer.parseInt(fraction.substring(0, underscorePlace));
-        	//...set the numerator equal to the number after the underscore and before the slash
-        	numerator = Integer.parseInt(fraction.substring(underscorePlace + 1, slashPlace));
-       		//...and set the denominator equal to the number after the slash
-        		denominator = Integer.parseInt(fraction.substring(slashPlace + 1));
-        } 
-        
-        //If there is only a slash...
-        else if(slashPlace >= 0) {
-        	//...set the numerator equal to the number before the slash...
-        	numerator = Integer.parseInt(fraction.substring(0, slashPlace));
-        	//...and set the denominator equal to the number after the slash.
-    		denominator = Integer.parseInt(fraction.substring(slashPlace + 1, fraction.length()));
-        } 
-        
-        //If there is no slash or underscore...
-        else {
-        	//...set the whole to the number put in.
-        	whole = Integer.parseInt(fraction);
-        
-        }
-        //Eliminate the whole number so there is just an improper fraction.
-        numerator += whole * denominator;
-	}
-	
-	//Create a toString method that will put out
-	public String toString(){
-		//Simplify the fraction
-		//For each integer equal to or less than the denominator (but greater than 1), check to see if
-    	//both the numerator and denominator are both divisible by it. If so, divide both by the number.
-    	for(int i = Math.abs(denominator); i > 1; i--) {
-    		if(numerator % i == 0 && denominator % i == 0) {
-    			numerator = numerator / i;
-    			denominator = denominator / i;
-    		}
-    	}
-		//Calculate the whole number
-		int whole = numerator / denominator;
-		//Use the remainder to find the new numerator
-		numerator = numerator % denominator;
-		return "whole: " + whole + "numerator: " + "denominator: ";
-		//Check which values are 0 to return the simplified value without them.
-        /* 
-        if(whole == 0) {
-        	if(numerator == 0) {
-        		//If the whole and numerator are 0, return 0.
-        		return "0";
-        	}else {
-        		//If the whole is 0, but the numerator is not, return just the fraction
-        		return numerator + "/" + denominator;
-        	}
-        }else if(numerator == 0) {
-        	//If the numerator is 0, but the whole is not, return justs the whole
-        	return "" + whole;
-        }else {
-        	//If none of the values are 0, return all the values
-        	return whole + "_" + numerator + "/" + denominator;
-        }
-        */
-	}
-}
-
 public class FracCalc {
 
 	public static void main(String[] args) {
@@ -102,15 +25,7 @@ public class FracCalc {
     		}
     	}
     }
-    
-    // ** IMPORTANT ** DO NOT DELETE THIS FUNCTION.  This function will be used to test your code
-    // This function takes a String 'input' and produces the result
-    //
-    // input is a fraction string that needs to be evaluated.  For your program, this will be the user input.
-    //      e.g. input ==> "1/2 + 3/4"
-    //        
-    // The function should return the result of the fraction after it has been calculated
-    //      e.g. return ==> "1_1/4"
+	
     public static String produceAnswer(String input)
     { 
     	//Split the input into parts
@@ -119,9 +34,61 @@ public class FracCalc {
         if(splitInput.length % 2 == 0) {
         	return "ERROR: The number of operators and operands is invalid.";
         }
-        return "";
+        //Create an object with the values from the leftmost fraction
+        Fraction firstOperand = new Fraction(splitInput[0]);
+        //Create a loop to repeat all the steps a number of times equal to half the number of inputs,
+        //rounded down, in order to account for the number of operators.
+        for(int i = 0; i * 2 + 1 < splitInput.length; i++) {
+        	//Create an object with the values from the second leftmost fraction
+        	Fraction secondOperand = new Fraction(splitInput[2]);
+        	//Check which operator was put in to determine which method to use.
+        	if(splitInput[1].equals("+")) {
+        		fracAddition(firstOperand, secondOperand);
+        	} else if(splitInput[1].equals("-")) {
+        		//Make the second operator negative before calling addition
+        		secondOperand.flipSign();
+        		fracAddition(firstOperand, secondOperand);
+        	} else if(splitInput[1].equals("*")) {
+        		fracMultiplication(firstOperand, secondOperand);
+        	} else if(splitInput[1].equals("/")) {
+        		secondOperand.setReciprocal();
+        		fracMultiplication(firstOperand, secondOperand);
+        	} else {
+        		return "ERROR: Invalid operator or format.";
+        	}
+        	//Shift every value except the first two spaces to the left to allow multiple operations.
+        	for(int j = 1; j < splitInput.length - 2; j++) {
+	        	splitInput[j] = splitInput[j + 2];
+	        }
+        }
+        return firstOperand.toString();
+       
     }
+    
+    //Add the two fraction objects, where each one represents a fraction
+    //Order: whole, numerator, denominator
+    public static void fracAddition(Fraction firstOperand, Fraction secondOperand) {
+    	//Get the numerators and denominators of each fraction object
+    	int numerator1 = firstOperand.getNumerator();
+    	int denominator1 = firstOperand.getDenominator();
+    	int numerator2 = secondOperand.getNumerator();
+    	int denominator2 = secondOperand.getDenominator();
+    	//Collapse the resulting sum into the leftmost fraction object:
+    	//Find a common denominator using the denominators of each object
+    	firstOperand.setDenominator(denominator1 * denominator2);
+    	//Find the numerator of the sum
+    	firstOperand.setNumerator(numerator1 * denominator2 + denominator1 * numerator2);
+    	
 
-    // TODO: Fill in the space below with any helper methods that you think you will need
+    }
+    
+    //Multiply the two input arrays, where each one represents a mixed number
+    //Order: whole, numerator, denominator
+    public static void fracMultiplication(Fraction firstOperand, Fraction secondOperand) {
+    	//Multiply the numerators and the denominators individually, collapsing the result into
+    	//the leftmost fraction object.
+    	firstOperand.setNumerator(firstOperand.getNumerator() * secondOperand.getNumerator());
+    	firstOperand.setDenominator(firstOperand.getDenominator() * secondOperand.getDenominator());
+    }
     
 }
