@@ -9,10 +9,17 @@ public class DamageTester {
 	public static void main(String[] args) {
 		
 		Random rand = new Random();
+		int sampleSize = 100;
+		int numberOfDice = 1;
+		int diceSize = 12;
+		int totalSum = 0;
 		
-		for(int i = 0; 
-		
-		//50 is the maximum and the 1 is our minimum 
+		for(int j = 0; j < sampleSize; j++) {
+			int oneAttackSum = 0;
+			for(int i = 0; i < numberOfDice; i++) {
+				oneAttackSum += rand.nextInt(diceSize) + 1;
+			}
+		}
 
 	}
 
