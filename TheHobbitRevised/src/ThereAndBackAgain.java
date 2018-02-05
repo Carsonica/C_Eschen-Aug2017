@@ -44,13 +44,8 @@ public class ThereAndBackAgain
 		
 		// Finally, call the allTravel method passing it party2 and 100 (representing
 		// the 100 miles that party2 has traveled together.  
-		allTravel(party2, 100);
-
-
-		
-		
-		
-		
+		String partyDistances = allTravel(party2, 100);
+		System.out.println(partyDistances);
 		
 	}
 
@@ -84,8 +79,8 @@ public class ThereAndBackAgain
 		String distancesOfEntireParty = "";
 		for(Traveler t : party)	{
 			t.travel(miles);
-			distancesOfEntireParty += t.getName() + " has traveled" + t.getDistanceTraveled() + " miles.";
+			distancesOfEntireParty += t.getName() + " has traveled " + t.getDistanceTraveled() + " miles.\n";
 		}
-		return ;
+		return distancesOfEntireParty;
 	}
 }
