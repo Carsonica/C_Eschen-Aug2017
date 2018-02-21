@@ -23,11 +23,15 @@ public abstract class Prism
 	public abstract double calcPerimeter();
 	
 	public double calcVolume() {
-		return calcAreaOfBase() * height;
+		return roundToHundredths(calcAreaOfBase() * height);
 	}
 	
 	public double calcSA() {
-		return (calcAreaOfBase() * 2) + (calcPerimeter() * height);
+		return roundToHundredths((calcAreaOfBase() * 2) + (calcPerimeter() * height));
+	}
+	
+	public double roundToHundredths(double number) {
+		return Math.round(number * 100) / 100;
 	}
 }
 	
