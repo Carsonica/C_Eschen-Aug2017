@@ -14,6 +14,17 @@ public class TextExcel
 
 	public static void main(String[] args)
 	{
-	    // Add your command loop here
+	    Scanner input = new Scanner(System.in);
+	    boolean runAgain = true;
+	    Spreadsheet sheet = new Spreadsheet();
+	    
+	    while(runAgain) {
+	    	System.out.println("Please enter a command: ");
+	    	String command = input.nextLine();
+	    	if(command.equals("quit")) {
+	    		runAgain = false;
+	    	}
+	    	sheet.processCommand(command);
+	    }
 	}
 }

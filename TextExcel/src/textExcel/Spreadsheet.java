@@ -10,8 +10,9 @@ public class Spreadsheet implements Grid
 {
 
 	Cell[][] cellArray;
+	
 	public Spreadsheet() {
-		cellArray = new Cell[20][12];
+		cellArray = new Cell[12][20];
 		for(int i = 0; i < cellArray.length; i++) {
 			for(int j = 0; j < cellArray.length; j++) {
 				cellArray[i][j] = new EmptyCell();
@@ -28,13 +29,13 @@ public class Spreadsheet implements Grid
 	@Override
 	public int getRows()
 	{
-		return cellArray.length;
+		return cellArray[0].length;
 	}
 
 	@Override
 	public int getCols()
 	{
-		return cellArray[0].length;
+		return cellArray.length;
 	}
 
 	@Override
