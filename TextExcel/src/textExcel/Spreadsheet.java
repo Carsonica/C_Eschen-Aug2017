@@ -9,12 +9,12 @@ package textExcel;
 public class Spreadsheet implements Grid
 {
 
-	Cell[][] cellArray;
+	private Cell[][] cellArray;
 	
 	public Spreadsheet() {
-		cellArray = new Cell[12][20];
+		cellArray = new Cell[20][12];
 		for(int i = 0; i < cellArray.length; i++) {
-			for(int j = 0; j < cellArray.length; j++) {
+			for(int j = 0; j < cellArray[0].length; j++) {
 				cellArray[i][j] = new EmptyCell();
 			}
 		}
@@ -29,20 +29,19 @@ public class Spreadsheet implements Grid
 	@Override
 	public int getRows()
 	{
-		return cellArray[0].length;
+		return cellArray.length;
 	}
 
 	@Override
 	public int getCols()
 	{
-		return cellArray.length;
+		return cellArray[0].length;
 	}
 
 	@Override
 	public Cell getCell(Location loc)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return cellArray[loc.getRow()][loc.getCol()];
 	}
 
 	@Override
