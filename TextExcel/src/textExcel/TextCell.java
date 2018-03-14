@@ -15,7 +15,11 @@ public class TextCell implements Cell {
 	
 	@Override
 	public String abbreviatedCellText() {
-		return cellText.substring(0, 9);
+		if(cellText.length() > 10){
+			return cellText.substring(0, 9);
+		}else {
+			return cellText;
+		}
 	}
 
 	@Override

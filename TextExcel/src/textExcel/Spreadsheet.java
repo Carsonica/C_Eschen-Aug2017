@@ -47,7 +47,27 @@ public class Spreadsheet implements Grid
 	@Override
 	public String getGridText()
 	{
-		// TODO Auto-generated method stub
+		String fullText = "   ";
+		//Create the line of column headers
+		for(int i = 0; i < cellArray.length; i++) {
+			fullText += "|" + (i + 'A') + "        ";
+		}
+		fullText += "|\n";
+		//Create the full grid, printing each cell's first 10 characters
+		for(int i = 0; i < cellArray.length; i++) {
+			fullText += i + " ";
+			//Add an extra blank space for a single digit row number
+			if(i < 10)
+				fullText += " ";
+			for(int j = 0; j < cellArray[0].length; j++) {
+				//Create each cell with the pipe and cell text abbreviated to 10 characters
+				fullText += "|" + cellArray[i][j].abbreviatedCellText();
+				//Add blank space to fill the rest of the cell
+				for(int k = 0; k < (10 - cellArray[i][j].abbreviatedCellText().length()); k++)
+					fullText += " ";
+			}
+			fullText += "|\n";
+		}
 		return null;
 	}
 
