@@ -22,8 +22,29 @@ public class Spreadsheet implements Grid
 	@Override
 	public String processCommand(String command)
 	{
-		// TODO Auto-generated method stub
-		return "";
+		//Convert the command to uppercase
+		command = command.toUpperCase;
+		//Split the command
+		String[] splitCommand = command.split(" ", 3);
+		
+		//Use if statements to process which command to execute
+		if(splitCommand.length == 1 && splitCommand[0].equals("clear")) {
+			//clear the entire sheet and return it
+			for(int i = 0; i < cellArray.length; i++) {
+				for(int j = 0; j < cellArray[0].length; j++) {
+					cellArray[i][j] = new EmptyCell();
+				}
+			}
+			return getGridText();
+		}else if (splitCommand.length == 1) {
+			//cell inspection: return the value at that cell
+			return cellArray[Integer.parseInt(command.substring(1))] [splitCommand[0].charAt(0) - 'A'].fullCellText();
+		}else if(splitCommand[1].equals("=")){
+			//string value assignment
+			cellArray[Integer.parseInt(command.substring(1))] [splitCommand[0].charAt(0) - 'A'] = new Cell(
+		}else if(){
+			//clear a particular cell and return the entire sheet
+		}
 	}
 
 	@Override
@@ -63,8 +84,9 @@ public class Spreadsheet implements Grid
 				//Create each cell with the pipe and cell text abbreviated to 10 characters
 				fullText += "|" + cellArray[i][j].abbreviatedCellText();
 				//Add blank space to fill the rest of the cell
-				for(int k = 0; k < (10 - cellArray[i][j].abbreviatedCellText().length()); k++)
+				for(int k = 0; k < (10 - cellArray[i][j].abbreviatedCellText().length()); k++) {
 					fullText += " ";
+				}
 			}
 			fullText += "|\n";
 		}

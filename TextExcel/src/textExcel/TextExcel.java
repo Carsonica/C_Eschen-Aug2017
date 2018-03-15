@@ -18,6 +18,9 @@ public class TextExcel
 	    boolean runAgain = true;
 	    Spreadsheet sheet = new Spreadsheet();
 	    
+	    TestsALL.Helper th = new TestsALL.Helper();
+	    System.out.println(th.getText());
+	    
 	    while(runAgain) {
 	    	System.out.println("Please enter a command: ");
 	    	String command = input.nextLine();
