@@ -1,4 +1,4 @@
-/* Carson Eshcne
+/* Carson Eschen
  * March 9, 2018
  * A class that implements the Grid interface
  */
@@ -22,10 +22,10 @@ public class Spreadsheet implements Grid
 	@Override
 	public String processCommand(String command)
 	{
-		//Convert the command to uppercase
-		command = command.toUpperCase;
 		//Split the command
 		String[] splitCommand = command.split(" ", 3);
+		//convert the parts of the string that are not cell inputs to uppercase
+		splitCommand[0] = splitCommand[0].toLowerCase();
 		
 		//Use if statements to process which command to execute
 		if(splitCommand.length == 1 && splitCommand[0].equals("clear")) {
@@ -38,12 +38,17 @@ public class Spreadsheet implements Grid
 			return getGridText();
 		}else if (splitCommand.length == 1) {
 			//cell inspection: return the value at that cell
-			return cellArray[Integer.parseInt(command.substring(1))] [splitCommand[0].charAt(0) - 'A'].fullCellText();
+			return cellArray[Integer.parseInt(splitCommand[0].substring(1))] [splitCommand[0].charAt(0) - 'a'].fullCellText();
 		}else if(splitCommand[1].equals("=")){
-			//string value assignment
-			cellArray[Integer.parseInt(command.substring(1))] [splitCommand[0].charAt(0) - 'A'] = new Cell(
-		}else if(){
+			//Assign a string value to a cell
+			cellArray[Integer.parseInt(splitCommand[0].substring(1))] [splitCommand[0].charAt(0) - 'a'] = new TextCell(splitCommand[2]);
+			return getGridText();
+		}else if(splitCommand[0].equals("clear")){
 			//clear a particular cell and return the entire sheet
+			cellArray[Integer.parseInt(splitCommand[0].substring(1))] [splitCommand[0].charAt(0) - 'a'] = new EmptyCell();
+			return getGridText();
+		}else {
+			return "That is not a valid command.";
 		}
 	}
 

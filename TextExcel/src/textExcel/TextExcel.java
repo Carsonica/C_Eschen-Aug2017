@@ -27,7 +27,7 @@ public class TextExcel
 	    	if(command.equals("quit")) {
 	    		runAgain = false;
 	    	}
-	    	sheet.processCommand(command);
+	    	System.out.println(sheet.processCommand(command));
 	    }
 	}
 }
