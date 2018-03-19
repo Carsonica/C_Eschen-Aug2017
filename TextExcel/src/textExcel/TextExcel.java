@@ -26,8 +26,9 @@ public class TextExcel
 	    	String command = input.nextLine();
 	    	if(command.equals("quit")) {
 	    		runAgain = false;
+	    	}else {
+	    		System.out.println(sheet.processCommand(command));
 	    	}
-	    	System.out.println(sheet.processCommand(command));
 	    }
 	}
 }

@@ -15,16 +15,16 @@ public class TextCell implements Cell {
 	
 	@Override
 	public String abbreviatedCellText() {
-		if(cellText.length() > 10){
-			return cellText.substring(0, 9);
+		if(cellText.length() > 12){
+			return cellText.substring(1, 11);
 		}else {
-			return cellText;
+			return cellText.substring(1, cellText.length());
 		}
 	}
 
 	@Override
 	public String fullCellText() {
-		return "\"" + cellText + "\"";
+		return cellText;
 	}
 
 	
