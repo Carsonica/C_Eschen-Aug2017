@@ -18,7 +18,7 @@ public class TextCell implements Cell {
 		if(cellText.length() > 12){
 			return cellText.substring(1, 11);
 		}else {
-			return cellText.substring(1, cellText.length());
+			return cellText.substring(1, cellText.length() - 1);
 		}
 	}
 

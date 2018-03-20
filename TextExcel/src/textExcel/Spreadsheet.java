@@ -37,7 +37,7 @@ public class Spreadsheet implements Grid
 			return getGridText();
 		}else if (splitCommand.length == 1) {
 			//cell inspection: return the value at that cell
-			return cellArray[Integer.parseInt(splitCommand[0].substring(1))] [splitCommand[0].charAt(0) - 'a'].fullCellText();
+			return cellArray[Integer.parseInt(splitCommand[0].substring(1)) - 1] [splitCommand[0].charAt(0) - 'a'].fullCellText();
 		}else if(splitCommand[1].equals("=")){
 			//Assign a string value to a cell
 			cellArray[Integer.parseInt(splitCommand[0].substring(1)) - 1] [splitCommand[0].charAt(0) - 'a'] = new TextCell(splitCommand[2]);
@@ -46,7 +46,7 @@ public class Spreadsheet implements Grid
 			//clear a particular cell and return the entire sheet
 			//Change the cell location to be lowercase
 			splitCommand[1] = splitCommand[1].toLowerCase();
-			cellArray[Integer.parseInt(splitCommand[1].substring(1)) + 1] [splitCommand[1].charAt(0) - 'a'] = new EmptyCell();
+			cellArray[Integer.parseInt(splitCommand[1].substring(1)) - 1] [splitCommand[1].charAt(0) - 'a'] = new EmptyCell();
 			return getGridText();
 		}else {
 			return "That is not a valid command.";
