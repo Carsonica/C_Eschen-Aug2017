@@ -89,10 +89,6 @@ public class Spreadsheet implements Grid
 			for(int j = 0; j < cellArray[0].length; j++) {
 				//Create each cell with the pipe and cell text abbreviated to 10 characters
 				fullText += "|" + cellArray[i - 1][j].abbreviatedCellText();
-				//Add blank space to fill the rest of the cell
-				for(int k = 0; k < (10 - cellArray[i - 1][j].abbreviatedCellText().length()); k++) {
-					fullText += " ";
-				}
 			}
 			fullText += "|\n";
 		}

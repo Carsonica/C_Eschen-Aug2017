@@ -18,10 +18,14 @@ public class TextCell implements Cell {
 		if(cellText.length() > 12){
 			return cellText.substring(1, 11);
 		}else {
-			return cellText.substring(1, cellText.length() - 1);
+			String textWithSpacing = cellText.substring(1, cellText.length() - 1);
+			for(int k = 0; k < (12 - cellText.length()); k++) {
+				textWithSpacing += " ";
+			}
+			return textWithSpacing;			
 		}
 	}
-
+;
 	@Override
 	public String fullCellText() {
 		return cellText;
