@@ -1,17 +1,22 @@
 package textExcel;
 
-public class RealCell implements Cell {
-
-	@Override
-	public String abbreviatedCellText() {
-		// TODO Auto-generated method stub
-		return null;
+public abstract class RealCell implements Cell {
+	
+	private String value;
+	
+	public RealCell(String value) {
+		this.value = value;
 	}
+	
+	@Override
+	public abstract String abbreviatedCellText();
 
 	@Override
 	public String fullCellText() {
-		// TODO Auto-generated method stub
-		return null;
+		return value;
 	}
-
+	
+	public String getValue() {
+		return value;
+	}
 }
