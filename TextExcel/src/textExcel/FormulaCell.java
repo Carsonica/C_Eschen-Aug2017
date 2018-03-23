@@ -1,6 +1,15 @@
 package textExcel;
 
 public class FormulaCell extends RealCell {
+	public FormulaCell (String equation) {
+		super(equation);
+	}
 	
-	public FormulaCell (String
+	public String abbreviatedCellText() {
+		return "IAmFormula";
+	}
+	
+	public double getDoubleValue() {
+		return 3.14;
+	}
 }

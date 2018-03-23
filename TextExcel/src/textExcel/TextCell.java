@@ -19,7 +19,7 @@ public class TextCell implements Cell {
 			return cellText.substring(1, 11);
 		}else {
 			String textWithSpacing = cellText.substring(1, cellText.length() - 1);
-			for(int k = 0; k < (12 - cellText.length()); k++) {
+			while(textWithSpacing.length() < 10) {
 				textWithSpacing += " ";
 			}
 			return textWithSpacing;			

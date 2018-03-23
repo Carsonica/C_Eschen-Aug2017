@@ -24,11 +24,12 @@ public class Spreadsheet implements Grid
 	{
 		//Split the command
 		String[] splitCommand = command.split(" ", 3);
-		//convert the parts of the string that are not cell inputs to uppercase
+		//convert the part of the string that are not cell inputs to lowercase
 		splitCommand[0] = splitCommand[0].toLowerCase();
-		//Use if statements to process which command to execute
+		
+		//Process which command to execute
 		if(splitCommand.length == 1 && splitCommand[0].equals("clear")) {
-			//clear the entire sheet and return it
+			//Clear the entire sheet and return it
 			for(int i = 0; i < cellArray.length; i++) {
 				for(int j = 0; j < cellArray[0].length; j++) {
 					cellArray[i][j] = new EmptyCell();
@@ -36,11 +37,23 @@ public class Spreadsheet implements Grid
 			}
 			return getGridText();
 		}else if (splitCommand.length == 1) {
-			//cell inspection: return the value at that cell
+			//Cell inspection: return the value at that cell
 			return cellArray[Integer.parseInt(splitCommand[0].substring(1)) - 1] [splitCommand[0].charAt(0) - 'a'].fullCellText();
 		}else if(splitCommand[1].equals("=")){
-			//Assign a string value to a cell
-			cellArray[Integer.parseInt(splitCommand[0].substring(1)) - 1] [splitCommand[0].charAt(0) - 'a'] = new TextCell(splitCommand[2]);
+			//Assign a value to a cell
+			if(splitCommand[2].charAt(0) == '"') {
+				//If it begins with quotation marks, assign it a text cell
+				cellArray[Integer.parseInt(splitCommand[0].substring(1)) - 1] [splitCommand[0].charAt(0) - 'a'] = new TextCell(splitCommand[2]);
+			}else if(splitCommand[2].charAt(0) == '(') {
+				//If it begins with parantheses, assign it a formula cell
+				cellArray[Integer.parseInt(splitCommand[0].substring(1)) - 1] [splitCommand[0].charAt(0) - 'a'] = new FormulaCell(splitCommand[2]);
+			}else if(splitCommand[2].charAt(splitCommand[2].length() - 1) == '%') {
+				//If it ends with a %, assign it a percent cell (minus the %)
+				cellArray[Integer.parseInt(splitCommand[0].substring(1)) - 1] [splitCommand[0].charAt(0) - 'a'] = new PercentCell(splitCommand[2].substring(0, splitCommand[2].length() - 1));
+			}else {
+				//Otherwise, assign it a value cell
+				cellArray[Integer.parseInt(splitCommand[0].substring(1)) - 1] [splitCommand[0].charAt(0) - 'a'] = new ValueCell(splitCommand[2]);
+			}
 			return getGridText();
 		}else if(splitCommand[0].equals("clear")){
 			//clear a particular cell and return the entire sheet

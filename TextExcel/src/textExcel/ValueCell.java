@@ -7,9 +7,12 @@ public class ValueCell extends RealCell {
 	}
 	
 	public String abbreviatedCellText() {
-		//Return the first 10 characters of the decimal, adding spaces as needed
-		String returnValue = getValue().substring(0, 9);
-		for(int k = 0; k < (10 - returnValue.length()); k++) {
+		//Return the first 10 characters of the decimal, adding spaces as needed to fill the cell
+		String returnValue = "" + getDoubleValue();
+		if(("" + getDoubleValue()).length() > 9) { 
+			returnValue = ("" + getDoubleValue()).substring(0, 10);
+		}
+		while(returnValue.length() < 10) {
 			returnValue += " ";
 		}
 		return returnValue;

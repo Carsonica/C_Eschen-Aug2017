@@ -2,6 +2,7 @@ package textExcel;
 
 public abstract class RealCell implements Cell {
 	
+	//Hold a string for the value
 	private String value;
 	
 	public RealCell(String value) {
@@ -16,7 +17,8 @@ public abstract class RealCell implements Cell {
 		return value;
 	}
 	
-	public String getValue() {
-		return value;
+	//Return the value of the cell as a double
+	public double getDoubleValue() {
+		return Double.parseDouble(value);
 	}
 }
