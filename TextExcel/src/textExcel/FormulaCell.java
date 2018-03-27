@@ -22,21 +22,25 @@ public class FormulaCell extends RealCell {
 		//Split the equation at the spaces
 		String[] splitEquation = fullCellText().trim().split(" ");
 		
-		//Search the equation for operators, storing their indices in an array in order of operations
-		ArrayList<Integer> operatorIndices = new ArrayList<Integer>();
+		//Store the values in an arrayList so the unneeded values can be removed
+		ArrayList<String> equationAsList = new ArrayList<String>();
+		for(int i = 0; i < splitEquation.length; i++) {
+			equationAsList.add(splitEquation[i]);
+		}
 		//Parse for SUM and AVG first, from left to right (to be implemented later)
-		//Parse for multiplication and division first, from left to right
-		for(int i = 1; i < splitEquation.length; i ++) {
+		//Parse for multiplication and division from left to right, executing them where found
+		for(int i = 1; i < equationAsList.size(); i ++) {
 			if(splitEquation[i].equals("*") || splitEquation[i].equals("*")) {
-				operatorIndices.add(i);
+				
 			}
 		}
-		//Parse for addition and subtraction, from left to right
+		//Parse for addition and subtraction from left to right, executing them where found
 		for(int i = 1; i < splitEquation.length; i ++) {
 			if(splitEquation[i].equals("+") || splitEquation[i].equals("-")) {
-				operatorIndices.add(i);
+			
 			}
 		}
+<<<<<<< HEAD
 		for(int index = 0; index < operatorIndices.size(); index++) {
 			if(splitEquation[index].equals("+")) {
 				//Store the answer in the 
@@ -50,6 +54,8 @@ public class FormulaCell extends RealCell {
 				splitEquation[index] = Double.parseDouble(splitEquation[index - 1]) / Double.parseDouble(splitEquation[index + 1]) + "";
 			}
 		}
+=======
+>>>>>>> branch 'master' of https://github.com/Carsonica/C_Eschen-Aug2017.git
 		return 3.14;
 	}
 		//Create a method to reduce the the indices after the 
