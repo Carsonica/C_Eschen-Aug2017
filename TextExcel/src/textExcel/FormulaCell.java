@@ -37,18 +37,20 @@ public class FormulaCell extends RealCell {
 				operatorIndices.add(i);
 			}
 		}
-		for(int index: operatorIndices) {
+		for(int index = 0; index < operatorIndices.size(); index++) {
 			if(splitEquation[index].equals("+")) {
-				fracAddition(splitEquation[index - 1], splitEquation[index + 1]);
+				//Store the answer in the 
+				splitEquation[index] = Double.parseDouble(splitEquation[index - 1]) + Double.parseDouble(splitEquation[index + 1]) + "";
 			} else if(splitEquation[index].equals("-")) {
-				//Make the second operator negative before calling addition
-				fracAddition(splitEquation[index - 1], "-" + splitEquation[index + 1]);
+				//
+				splitEquation[index] = Double.parseDouble(splitEquation[index - 1]) - Double.parseDouble(splitEquation[index + 1]) + "";
 			} else if(splitEquation[index].equals("*")) {
-				fracMultiplication(firstOperand, secondOperand);
-			} else(splitEquation[index].equals("/")) {
-				secondOperand.setReciprocal();
-				fracMultiplication(firstOperand, secondOperand);
-    	}
+				splitEquation[index] = Double.parseDouble(splitEquation[index - 1]) * Double.parseDouble(splitEquation[index + 1]) + "";
+			} else {
+				splitEquation[index] = Double.parseDouble(splitEquation[index - 1]) / Double.parseDouble(splitEquation[index + 1]) + "";
+			}
+		}
 		return 3.14;
 	}
+		//Create a method to reduce the the indices after the 
 }
