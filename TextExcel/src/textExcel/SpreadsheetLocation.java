@@ -21,14 +21,13 @@ public class SpreadsheetLocation implements Location
     public int getCol()
     {
         // TODO Auto-generated method stub
-    	System.out.print(column);
         return column;
     }
     
     public SpreadsheetLocation(String cellName)
     {
         row = Integer.parseInt(cellName.substring(1)) - 1;
-        column = cellName.charAt(0) - 'A';
+        column = cellName.charAt(0) - 'a';
     }
 
 }

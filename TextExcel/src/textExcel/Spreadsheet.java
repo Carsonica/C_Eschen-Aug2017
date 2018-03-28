@@ -46,7 +46,7 @@ public class Spreadsheet implements Grid
 				cellArray[Integer.parseInt(splitCommand[0].substring(1)) - 1] [splitCommand[0].charAt(0) - 'a'] = new TextCell(splitCommand[2]);
 			}else if(splitCommand[2].charAt(0) == '(') {
 				//If it begins with parantheses, assign it a formula cell
-				cellArray[Integer.parseInt(splitCommand[0].substring(1)) - 1] [splitCommand[0].charAt(0) - 'a'] = new FormulaCell(splitCommand[2]);
+				cellArray[Integer.parseInt(splitCommand[0].substring(1)) - 1] [splitCommand[0].charAt(0) - 'a'] = new FormulaCell(splitCommand[2], this);
 			}else if(splitCommand[2].charAt(splitCommand[2].length() - 1) == '%') {
 				//If it ends with a %, assign it a percent cell (minus the %)
 				cellArray[Integer.parseInt(splitCommand[0].substring(1)) - 1] [splitCommand[0].charAt(0) - 'a'] = new PercentCell(splitCommand[2].substring(0, splitCommand[2].length() - 1));
