@@ -13,11 +13,7 @@ public class Spreadsheet implements Grid
 	
 	public Spreadsheet() {
 		cellArray = new Cell[20][12];
-		for(int i = 0; i < cellArray.length; i++) {
-			for(int j = 0; j < cellArray[0].length; j++) {
-				cellArray[i][j] = new EmptyCell();
-			}
-		}
+		emptyArray();
 	}
 	@Override
 	public String processCommand(String command)
@@ -30,36 +26,36 @@ public class Spreadsheet implements Grid
 		//Process which command to execute
 		if(splitCommand.length == 1 && splitCommand[0].equals("clear")) {
 			//Clear the entire sheet and return it
-			for(int i = 0; i < cellArray.length; i++) {
-				for(int j = 0; j < cellArray[0].length; j++) {
-					cellArray[i][j] = new EmptyCell();
-				}
-			}
+			emptyArray();
 			return getGridText();
 		}else if (splitCommand.length == 1) {
+			SpreadsheetLocation sLocation = new SpreadsheetLocation(splitCommand[0]);
 			//Cell inspection: return the value at that cell
-			return cellArray[Integer.parseInt(splitCommand[0].substring(1)) - 1] [splitCommand[0].charAt(0) - 'a'].fullCellText();
+			return getCell(sLocation).fullCellText();
 		}else if(splitCommand[1].equals("=")){
+			//Create the location
+			SpreadsheetLocation sLocation = new SpreadsheetLocation(splitCommand[0]);
 			//Assign a value to a cell
 			if(splitCommand[2].charAt(0) == '"') {
 				//If it begins with quotation marks, assign it a text cell
-				cellArray[Integer.parseInt(splitCommand[0].substring(1)) - 1] [splitCommand[0].charAt(0) - 'a'] = new TextCell(splitCommand[2]);
+				cellArray[sLocation.getRow()] [sLocation.getCol()] = new TextCell(splitCommand[2]);
 			}else if(splitCommand[2].charAt(0) == '(') {
 				//If it begins with parantheses, assign it a formula cell
-				cellArray[Integer.parseInt(splitCommand[0].substring(1)) - 1] [splitCommand[0].charAt(0) - 'a'] = new FormulaCell(splitCommand[2], this);
+				cellArray[sLocation.getRow()] [sLocation.getCol()] = new FormulaCell(splitCommand[2], this);
 			}else if(splitCommand[2].charAt(splitCommand[2].length() - 1) == '%') {
 				//If it ends with a %, assign it a percent cell (minus the %)
-				cellArray[Integer.parseInt(splitCommand[0].substring(1)) - 1] [splitCommand[0].charAt(0) - 'a'] = new PercentCell(splitCommand[2].substring(0, splitCommand[2].length() - 1));
+				cellArray[sLocation.getRow()] [sLocation.getCol()] = new PercentCell(splitCommand[2].substring(0, splitCommand[2].length() - 1));
 			}else {
 				//Otherwise, assign it a value cell
-				cellArray[Integer.parseInt(splitCommand[0].substring(1)) - 1] [splitCommand[0].charAt(0) - 'a'] = new ValueCell(splitCommand[2]);
+				cellArray[sLocation.getRow()] [sLocation.getCol()] = new ValueCell(splitCommand[2]);
 			}
 			return getGridText();
 		}else if(splitCommand[0].equals("clear")){
 			//clear a particular cell and return the entire sheet
 			//Change the cell location to be lowercase
 			splitCommand[1] = splitCommand[1].toLowerCase();
-			cellArray[Integer.parseInt(splitCommand[1].substring(1)) - 1] [splitCommand[1].charAt(0) - 'a'] = new EmptyCell();
+			SpreadsheetLocation sLocation = new SpreadsheetLocation(splitCommand[1]);
+			cellArray[sLocation.getRow()] [sLocation.getCol()] = new EmptyCell();
 			return getGridText();
 		}else {
 			return "That is not a valid command.";
@@ -107,5 +103,12 @@ public class Spreadsheet implements Grid
 		}
 		return fullText;
 	}
-
+	
+	public void emptyArray() {
+		for(int i = 0; i < cellArray.length; i++) {
+			for(int j = 0; j < cellArray[0].length; j++) {
+				cellArray[i][j] = new EmptyCell();
+			}
+		}
+	}
 }

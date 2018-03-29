@@ -42,12 +42,11 @@ public class FormulaCell extends RealCell {
 					RealCell rCell = (RealCell) sourceSheet.getCell(sLocation);
 					equationAsList.set(i, rCell.getDoubleValue() + "");
 				}
-				
 			}
 		}
 		//Parse for SUM and AVG first, from left to right
 		for(int i = 1; i < equationAsList.size(); i++) {
-			if(equationAsList.get(i).equals("SUM")) {
+			if(equationAsList.get(i).equals("sum")) {
 				double sum = sum(equationAsList.get(i + 1));
 				equationAsList.set(i, sum + "");
 				equationAsList.remove(i + 1);
@@ -82,8 +81,14 @@ public class FormulaCell extends RealCell {
 	private double sum(String range) {
 		String lowestCell = range.substring(0, range.indexOf("-"));
 		String highestCell = range.substring(range.indexOf("-"));
+		SpreadsheetLocation lowestLoc = new SpreadsheetLocation(lowestCell);
+		SpreadsheetLocation highestLoc = new SpreadsheetLocation(highestCell);
 		double total = 0;
-		
+		for(int currentRow = lowestLoc.getRow(); currentRow < highestLoc.getRow(); currentRow++) {
+			for(int currentCol = lowestLoc.getCol(); currentCol < lowestLoc.getCol(); currentCol++) {
+				total += sourceSheet.getCell(
+			}
+		}
 		return 3.3;
 	}
 }
