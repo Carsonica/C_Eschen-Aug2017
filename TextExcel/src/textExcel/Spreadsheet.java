@@ -57,11 +57,14 @@ public class Spreadsheet implements Grid
 			SpreadsheetLocation sLocation = new SpreadsheetLocation(splitCommand[1]);
 			cellArray[sLocation.getRow()] [sLocation.getCol()] = new EmptyCell();
 			return getGridText();
-		/*processCommand for sorting
-		 * }else if(splitCommand[0].equals("sorta")) {
-		 * 	
-		 * }
-		 */
+		}else if(splitCommand[0].equals("sorta")) {
+		  	//Sort into ascending order
+			sorta(splitCommand[1].toLowerCase());
+			return getGridText();
+		}else if(splitCommand[0].equals("sortd")) {
+			//Sort into descending order
+			sortd(splitCommand[1].toLowerCase());
+			return getGridText();
 		}else {
 			return "That is not a valid command.";
 		}
@@ -96,6 +99,7 @@ public class Spreadsheet implements Grid
 		fullText += "|\n";
 		//Create the full grid, printing each cell's first 10 characters
 		for(int i = 1; i < cellArray.length + 1; i++) {
+			//Add the row header
 			fullText += i + " ";
 			//Add an extra blank space for a single digit row number
 			if(i < 10)
@@ -115,5 +119,13 @@ public class Spreadsheet implements Grid
 				cellArray[i][j] = new EmptyCell();
 			}
 		}
+	}
+	
+	public void sorta(String range) {
+		
+	}
+	
+	public void sortd(String range) {
+		
 	}
 }
