@@ -1,4 +1,4 @@
-/* Carson Eschen
+ /* Carson Eschen
  * March 9 2017
  * A class that implements the Location interface
  */

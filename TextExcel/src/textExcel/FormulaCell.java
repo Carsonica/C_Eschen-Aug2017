@@ -34,6 +34,20 @@ public class FormulaCell extends RealCell {
 		for(int i = 0; i < equationAsList.size(); i++) {
 			equationAsList.set(i, equationAsList.get(i).toLowerCase());
 		}
+		
+		//Parse for SUM and AVG first, from left to right
+		for(int i = 1; i < equationAsList.size(); i++) {
+			if(equationAsList.get(i).equals("sum")) {
+				double sum = sum(equationAsList.get(i + 1));
+				equationAsList.set(i, sum + "");
+				equationAsList.remove(i + 1);
+			}else if(equationAsList.get(i).equals("avg")) {
+				double avg = avg(equationAsList.get(i + 1));
+				equationAsList.set(i, avg + "");
+				equationAsList.remove(i + 1);
+			}
+		}
+		
 		//Parse for cell references, converting them to double values
 		for(int i = 0; i < equationAsList.size(); i ++) {
 			if(equationAsList.get(i).charAt(0) >= 'a' && equationAsList.get(i).charAt(0) <= 'l') {
@@ -44,14 +58,7 @@ public class FormulaCell extends RealCell {
 				}
 			}
 		}
-		//Parse for SUM and AVG first, from left to right
-		for(int i = 1; i < equationAsList.size(); i++) {
-			if(equationAsList.get(i).equals("sum")) {
-				double sum = sum(equationAsList.get(i + 1));
-				equationAsList.set(i, sum + "");
-				equationAsList.remove(i + 1);
-			}
-		}
+		
 		//Parse for multiplication and division from left to right, executing them where found
 		for(int i = 1; i < equationAsList.size(); i ++) {
 			if(equationAsList.get(i).equals("*") || equationAsList.get(i).equals("/") || equationAsList.get(i).equals("+") || equationAsList.get(i).equals("-")) {
@@ -80,15 +87,35 @@ public class FormulaCell extends RealCell {
 	}
 	private double sum(String range) {
 		String lowestCell = range.substring(0, range.indexOf("-"));
-		String highestCell = range.substring(range.indexOf("-"));
+		String highestCell = range.substring(range.indexOf("-") + 1);
 		SpreadsheetLocation lowestLoc = new SpreadsheetLocation(lowestCell);
 		SpreadsheetLocation highestLoc = new SpreadsheetLocation(highestCell);
 		double total = 0;
-		for(int currentRow = lowestLoc.getRow(); currentRow < highestLoc.getRow(); currentRow++) {
-			for(int currentCol = lowestLoc.getCol(); currentCol < lowestLoc.getCol(); currentCol++) {
-				total += sourceSheet.getCell(
+		for(int currentRow = lowestLoc.getRow(); currentRow <= highestLoc.getRow(); currentRow++) {
+			for(int currentCol = lowestLoc.getCol(); currentCol <= highestLoc.getCol(); currentCol++) {
+				SpreadsheetLocation currentLocation = new SpreadsheetLocation(((char) ('a' + currentCol)) + "" + (currentRow + 1));
+				if(sourceSheet.getCell(currentLocation) instanceof RealCell) {
+					RealCell currentCell = (RealCell) sourceSheet.getCell(currentLocation);
+					total += currentCell.getDoubleValue();
+				}
 			}
 		}
-		return 3.3;
+		return total;
+	}
+	private double avg(String range) {
+		String lowestCell = range.substring(0, range.indexOf("-"));
+		String highestCell = range.substring(range.indexOf("-") + 1);
+		SpreadsheetLocation lowestLoc = new SpreadsheetLocation(lowestCell);
+		SpreadsheetLocation highestLoc = new SpreadsheetLocation(highestCell);
+		int numberOfCells = 0;
+		for(int currentRow = lowestLoc.getRow(); currentRow <= highestLoc.getRow(); currentRow++) {
+			for(int currentCol = lowestLoc.getCol(); currentCol <= highestLoc.getCol(); currentCol++) {
+				SpreadsheetLocation currentLocation = new SpreadsheetLocation(((char) ('a' + currentCol)) + "" + (currentRow + 1));
+				if(sourceSheet.getCell(currentLocation) instanceof RealCell) {
+					numberOfCells++;
+				}
+			}
+		}
+		return sum(range) / numberOfCells;
 	}
 }

@@ -57,6 +57,11 @@ public class Spreadsheet implements Grid
 			SpreadsheetLocation sLocation = new SpreadsheetLocation(splitCommand[1]);
 			cellArray[sLocation.getRow()] [sLocation.getCol()] = new EmptyCell();
 			return getGridText();
+		/*processCommand for sorting
+		 * }else if(splitCommand[0].equals("sorta")) {
+		 * 	
+		 * }
+		 */
 		}else {
 			return "That is not a valid command.";
 		}
