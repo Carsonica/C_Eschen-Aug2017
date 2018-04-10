@@ -24,10 +24,16 @@ public class SpreadsheetLocation implements Location
         return column;
     }
     
+    //Constructor given a string input
     public SpreadsheetLocation(String cellName)
     {
         row = Integer.parseInt(cellName.substring(1)) - 1;
         column = cellName.charAt(0) - 'a';
     }
 
+    //Constructor given two ints
+    public SpreadsheetLocation(int column, int row) {
+    	this.column = column;
+    	this.row = row;
+    }
 }

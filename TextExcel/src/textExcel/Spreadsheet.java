@@ -3,6 +3,7 @@
  * A class that implements the Grid interface
  */
 package textExcel;
+import java.util.*;
 
 // Update this file with your own code.
 
@@ -122,7 +123,18 @@ public class Spreadsheet implements Grid
 	}
 	
 	public void sorta(String range) {
-		
+		ArrayList<Cell> orderOfCells = new ArrayList<Cell>();
+		SpreadsheetLocation lowestLoc = new SpreadsheetLocation(range.substring(0, range.indexOf("-")));
+		SpreadsheetLocation highestLoc = new SpreadsheetLocation(range.substring(range.indexOf("-") + 1));
+		for(int currentRow = lowestLoc.getRow(); currentRow <= highestLoc.getRow(); currentRow++) {
+			for(int currentCol = lowestLoc.getCol(); currentCol <= highestLoc.getCol(); currentCol++) {
+				Cell currentCell = getCell(new SpreadsheetLocation(currentCol, currentRow));
+				if(currentCell instanceof RealCell) {
+					
+				}
+				orderOfCells.add();
+			}
+		}
 	}
 	
 	public void sortd(String range) {

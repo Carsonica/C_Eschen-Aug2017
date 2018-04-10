@@ -86,15 +86,13 @@ public class FormulaCell extends RealCell {
 		return Double.parseDouble(equationAsList.get(1));
 	}
 	private double sum(String range) {
-		String lowestCell = range.substring(0, range.indexOf("-"));
-		String highestCell = range.substring(range.indexOf("-") + 1);
-		SpreadsheetLocation lowestLoc = new SpreadsheetLocation(lowestCell);
-		SpreadsheetLocation highestLoc = new SpreadsheetLocation(highestCell);
+		SpreadsheetLocation lowestLoc = new SpreadsheetLocation(range.substring(0, range.indexOf("-")));
+		SpreadsheetLocation highestLoc = new SpreadsheetLocation(range.substring(range.indexOf("-") + 1));
 		double total = 0;
 		for(int currentRow = lowestLoc.getRow(); currentRow <= highestLoc.getRow(); currentRow++) {
 			for(int currentCol = lowestLoc.getCol(); currentCol <= highestLoc.getCol(); currentCol++) {
-				SpreadsheetLocation currentLocation = new SpreadsheetLocation(((char) ('a' + currentCol)) + "" + (currentRow + 1));
-				if(sourceSheet.getCell(currentLocation) instanceof RealCell) {
+				SpreadsheetLocation currentLocation = new SpreadsheetLocation(currentCol, currentRow);
+				if(sourceSheet.getCell(new SpreadsheetLocation(currentCol, currentRow)) instanceof RealCell) {
 					RealCell currentCell = (RealCell) sourceSheet.getCell(currentLocation);
 					total += currentCell.getDoubleValue();
 				}
@@ -103,15 +101,12 @@ public class FormulaCell extends RealCell {
 		return total;
 	}
 	private double avg(String range) {
-		String lowestCell = range.substring(0, range.indexOf("-"));
-		String highestCell = range.substring(range.indexOf("-") + 1);
-		SpreadsheetLocation lowestLoc = new SpreadsheetLocation(lowestCell);
-		SpreadsheetLocation highestLoc = new SpreadsheetLocation(highestCell);
+		SpreadsheetLocation lowestLoc = new SpreadsheetLocation(range.substring(0, range.indexOf("-")));
+		SpreadsheetLocation highestLoc = new SpreadsheetLocation(range.substring(range.indexOf("-") + 1));
 		int numberOfCells = 0;
 		for(int currentRow = lowestLoc.getRow(); currentRow <= highestLoc.getRow(); currentRow++) {
 			for(int currentCol = lowestLoc.getCol(); currentCol <= highestLoc.getCol(); currentCol++) {
-				SpreadsheetLocation currentLocation = new SpreadsheetLocation(((char) ('a' + currentCol)) + "" + (currentRow + 1));
-				if(sourceSheet.getCell(currentLocation) instanceof RealCell) {
+				if(sourceSheet.getCell(new SpreadsheetLocation(currentCol, currentRow)) instanceof RealCell) {
 					numberOfCells++;
 				}
 			}
